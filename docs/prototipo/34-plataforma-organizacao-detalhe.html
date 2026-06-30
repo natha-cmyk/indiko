@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko Plataforma · Organização</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14);--plat:#0B0B0F;--plat-2:#16161D;--plat-border:#26262F;--plat-text:#E7E7EA;--plat-muted:#8A8A95}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.8125rem;border-radius:var(--r-md);padding:.6rem .95rem;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{background:var(--surface-2)}
+.btn-warn{background:transparent;color:var(--warning);border-color:var(--warning)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.18rem .55rem;border-radius:999px}.st-ativa{background:var(--success-soft);color:var(--success)}
+.pa-admin{background:var(--red-soft);color:var(--brand-red)}.pa-op{background:var(--cyan-soft);color:var(--brand-cyan)}
+.plat-aside{background:var(--plat);border-color:var(--plat-border)!important}
+.pnav{display:flex;align-items:center;gap:.75rem;padding:.6rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--plat-muted);transition:.15s}
+.pnav:hover{background:var(--plat-2);color:var(--plat-text)}.pnav.active{background:var(--brand-red);color:#fff}.pnav.active .lucide{color:#fff}.pnav .lucide{width:18px;height:18px}
+.plat-pill{display:inline-flex;align-items:center;gap:.35rem;font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem;border-radius:999px;background:rgba(255,255,255,.08);color:#fff}
+</style>
+</head>
+<body>
+<div class="lg:flex">
+  <div id="bd" onclick="closeNav()" class="hidden fixed inset-0 z-40 lg:hidden" style="background:rgba(0,0,0,.5)"></div>
+  <aside id="nav" class="plat-aside fixed lg:sticky top-0 z-50 lg:z-auto w-64 shrink-0 h-screen p-4 border-r flex flex-col -translate-x-full lg:translate-x-0 transition-transform">
+    <div class="flex items-center gap-2.5 px-2 py-2 mb-1"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold" style="color:var(--plat-text)">Indiko</div><span class="plat-pill mt-0.5"><i data-lucide="layers" style="width:10px;height:10px"></i> Plataforma</span></div></div>
+    <nav class="space-y-1 flex-1 mt-3">
+      <a href="33-plataforma-organizacoes.html" class="pnav active"><i data-lucide="building-2"></i> Organizações</a>
+      <a href="35-plataforma-planos-billing.html" class="pnav"><i data-lucide="credit-card"></i> Planos & billing</a>
+    </nav>
+    <a href="08-login-admin.html" class="pnav"><i data-lucide="log-out"></i> Sair</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center gap-3" style="background:var(--bg);border-color:var(--border)">
+      <button onclick="openNav()" class="lg:hidden"><i data-lucide="menu"></i></button>
+      <a href="33-plataforma-organizacoes.html"><i data-lucide="arrow-left"></i></a>
+      <h1 class="text-lg font-bold">Seahub Coworking</h1>
+    </header>
+
+    <main class="px-4 lg:px-8 py-6 max-w-5xl space-y-5">
+      <!-- header da org -->
+      <div class="card p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div class="w-16 h-16 rounded-xl flex items-center justify-center font-extrabold text-white text-2xl" style="background:var(--brand-red)">S</div>
+        <div class="flex-1">
+          <div class="flex items-center gap-2 flex-wrap"><p class="font-bold text-lg">Seahub Coworking</p><span class="badge st-ativa">Ativa</span><span class="badge" style="background:var(--surface-3);color:var(--text-muted)">Plano Scale</span></div>
+          <p class="text-sm font-data mt-0.5" style="color:var(--text-subtle)">indiko.app/seahub · criada em mar/2026</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-ghost"><i data-lucide="log-in" style="width:15px;height:15px"></i> Acessar como suporte</button>
+          <button class="btn btn-warn"><i data-lucide="pause" style="width:15px;height:15px"></i> Suspender</button>
+        </div>
+      </div>
+
+      <!-- métricas de uso -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Parceiros</p><p class="text-2xl font-bold font-data mt-1">312</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Indicações/mês</p><p class="text-2xl font-bold font-data mt-1">486</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Programas</p><p class="text-2xl font-bold font-data mt-1">2</p></div>
+        <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">MRR</p><p class="text-2xl font-bold font-data mt-1">R$ 1.490</p></div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-5">
+        <!-- plano e provisionamento -->
+        <div class="card p-5 space-y-3">
+          <h3 class="font-bold">Plano e provisionamento</h3>
+          <div class="flex items-center justify-between"><span class="text-sm">Plano</span><select class="btn btn-ghost" style="font-family:var(--font-ui)"><option>Scale</option><option>Growth</option><option>Starter</option></select></div>
+          <div class="flex items-center justify-between text-sm"><span style="color:var(--text-muted)">Limite de parceiros</span><span class="font-data">Ilimitado</span></div>
+          <div class="flex items-center justify-between text-sm"><span style="color:var(--text-muted)">Programas habilitados</span><span class="font-data">Ilimitado</span></div>
+          <div class="flex items-center justify-between text-sm"><span style="color:var(--text-muted)">Domínio próprio</span><span style="color:var(--success)">Habilitado</span></div>
+        </div>
+        <!-- admins da org -->
+        <div class="card p-5">
+          <h3 class="font-bold mb-3">Usuários da organização</h3>
+          <div class="space-y-2">
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-red)">G</div><div class="flex-1"><p class="text-sm font-medium">Guilherme Oliveira</p><p class="text-xs" style="color:var(--text-subtle)">guiga@seahubcoworking.com.br</p></div><span class="badge pa-admin">Admin</span></div>
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">N</div><div class="flex-1"><p class="text-sm font-medium">Nathã</p><p class="text-xs" style="color:var(--text-subtle)">natha@seahubcoworking.com.br</p></div><span class="badge pa-admin">Admin</span></div>
+            <div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">P</div><div class="flex-1"><p class="text-sm font-medium">Peter</p><p class="text-xs" style="color:var(--text-subtle)">peter@seahubcoworking.com.br</p></div><span class="badge pa-op">Operação</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- zona de risco -->
+      <div class="card p-5" style="border-color:var(--warning)">
+        <h3 class="font-bold mb-1">Ações sensíveis</h3>
+        <p class="text-sm mb-3" style="color:var(--text-muted)">Suspender pausa o acesso de todos os usuários e parceiros, sem apagar dados. Encerrar exige confirmação dupla.</p>
+        <div class="flex gap-2"><button class="btn btn-warn">Suspender organização</button><button class="btn btn-ghost" style="color:var(--brand-red);border-color:var(--brand-red)">Encerrar contrato</button></div>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function openNav(){document.getElementById('nav').classList.remove('-translate-x-full');document.getElementById('bd').classList.remove('hidden')}
+function closeNav(){document.getElementById('nav').classList.add('-translate-x-full');document.getElementById('bd').classList.add('hidden')}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){lucide.createIcons()}
+</script>
+</body>
+</html>

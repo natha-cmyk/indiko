@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Detalhe da indicação</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.875rem;border-radius:var(--r-md);padding:.7rem 1.1rem;cursor:pointer;border:1px solid transparent}
+.btn-wa{background:#25D366;color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;font-weight:700;padding:.25rem .55rem;border-radius:999px}
+.badge-convertida{background:var(--success-soft);color:var(--success)}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.5rem 0;color:var(--text-subtle);font-size:10px;font-weight:500}.tab.active{color:var(--brand-red);font-weight:600}.tab .lucide{width:20px;height:20px}
+/* timeline */
+.tl{position:relative;padding-left:28px}
+.tl::before{content:"";position:absolute;left:9px;top:4px;bottom:4px;width:2px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:18px}
+.tl-dot{position:absolute;left:-28px;top:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface-3)}
+.tl-dot.done{background:var(--success)}.tl-dot.now{background:var(--brand-red)}
+</style>
+</head>
+<body class="lg:flex">
+<aside class="hidden lg:flex flex-col w-60 shrink-0 border-r sticky top-0 h-screen p-4" style="background:var(--bg);border-color:var(--border)">
+  <div class="flex items-center gap-2.5 px-2 py-2 mb-4"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><span class="font-extrabold text-lg">Indiko</span></div>
+  <nav class="space-y-1 flex-1">
+    <a href="02-dashboard-parceiro.html" class="nav-item"><i data-lucide="home"></i> Início</a>
+    <a href="03-indicar.html" class="nav-item"><i data-lucide="plus-circle"></i> Indicar</a>
+    <a href="04-minhas-indicacoes.html" class="nav-item active"><i data-lucide="list"></i> Minhas indicações</a>
+    <a href="05-carteira.html" class="nav-item"><i data-lucide="wallet"></i> Carteira</a>
+    <a href="06-resgate.html" class="nav-item"><i data-lucide="banknote"></i> Resgate</a>
+    <a href="07-perfil-materiais.html" class="nav-item"><i data-lucide="folder"></i> Materiais & perfil</a>
+  </nav>
+  <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+  <a href="01-login-parceiro.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+</aside>
+
+<div class="flex-1 min-w-0 flex flex-col min-h-screen">
+  <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5"><a href="04-minhas-indicacoes.html"><i data-lucide="arrow-left"></i></a><span class="font-bold">Indicação</span></div>
+    <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style="background:var(--brand-cyan)">MA</div>
+  </header>
+
+  <main class="flex-1 px-4 lg:px-8 py-6 pb-28 lg:pb-8 max-w-2xl w-full mx-auto space-y-5">
+    <!-- topo -->
+    <div class="card p-5">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center font-bold text-white" style="background:var(--brand-cyan)">RC</div>
+          <div><p class="font-bold text-lg">Renata Cavalcante</p><p class="text-sm" style="color:var(--text-subtle)">Sala Privativa</p></div>
+        </div>
+        <span class="badge badge-convertida"><span style="width:6px;height:6px;border-radius:50%;background:var(--success);display:inline-block"></span> Convertida</span>
+      </div>
+      <div class="grid grid-cols-2 gap-3 mt-5 text-sm">
+        <div class="p-3 rounded-xl" style="background:var(--surface-2)"><p class="text-xs" style="color:var(--text-subtle)">Comissão prevista</p><p class="font-data font-bold text-lg" style="color:var(--success)">R$ 150,00</p></div>
+        <div class="p-3 rounded-xl" style="background:var(--surface-2)"><p class="text-xs" style="color:var(--text-subtle)">Libera em</p><p class="font-data font-bold text-lg">02/06/2026</p></div>
+      </div>
+    </div>
+
+    <!-- timeline -->
+    <div class="card p-5">
+      <h3 class="font-bold mb-4">Acompanhamento</h3>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot done"><i data-lucide="check" style="width:12px;height:12px;color:#fff"></i></div><p class="text-sm font-semibold">Indicação criada</p><p class="text-xs" style="color:var(--text-subtle)">14/05/2026 · via seu link</p></div>
+        <div class="tl-item"><div class="tl-dot done"><i data-lucide="check" style="width:12px;height:12px;color:#fff"></i></div><p class="text-sm font-semibold">Em contato</p><p class="text-xs" style="color:var(--text-subtle)">15/05/2026 · equipe comercial</p></div>
+        <div class="tl-item"><div class="tl-dot now"><i data-lucide="dot" style="width:14px;height:14px;color:#fff"></i></div><p class="text-sm font-semibold">Convertida 🎉</p><p class="text-xs" style="color:var(--text-subtle)">18/05/2026 · contrato assinado</p></div>
+        <div class="tl-item"><div class="tl-dot"></div><p class="text-sm font-semibold" style="color:var(--text-subtle)">Comissão paga</p><p class="text-xs" style="color:var(--text-subtle)">aguardando liberação (02/06)</p></div>
+      </div>
+    </div>
+
+    <!-- dados do lead -->
+    <div class="card p-5">
+      <h3 class="font-bold mb-3">Dados que você enviou</h3>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between"><span style="color:var(--text-muted)">Produto</span><span class="font-medium">Sala Privativa</span></div>
+        <div class="flex justify-between"><span style="color:var(--text-muted)">Origem</span><span class="font-medium">Link único</span></div>
+        <div class="flex justify-between"><span style="color:var(--text-muted)">WhatsApp</span><span class="font-medium font-data">(84) 9 9123-4455</span></div>
+      </div>
+      <a href="#" class="btn btn-wa w-full mt-4"><i data-lucide="message-circle"></i> Falar com a Renata</a>
+    </div>
+  </main>
+</div>
+
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t flex items-center px-2" style="background:var(--bg);border-color:var(--border);padding-bottom:env(safe-area-inset-bottom)">
+  <a href="02-dashboard-parceiro.html" class="tab"><i data-lucide="home"></i>Início</a>
+  <a href="04-minhas-indicacoes.html" class="tab active"><i data-lucide="list"></i>Indicações</a>
+  <a href="03-indicar.html" class="tab -mt-5"><span class="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" style="background:var(--brand-red)"><i data-lucide="plus" style="width:24px;height:24px"></i></span></a>
+  <a href="05-carteira.html" class="tab"><i data-lucide="wallet"></i>Carteira</a>
+  <a href="07-perfil-materiais.html" class="tab"><i data-lucide="user"></i>Perfil</a>
+</nav>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

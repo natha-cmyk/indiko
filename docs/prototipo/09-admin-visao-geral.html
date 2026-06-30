@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko Admin · Visão geral</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data);font-feature-settings:"tnum" 1}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:700;padding:.2rem .5rem;border-radius:999px}
+.up{background:var(--success-soft);color:var(--success)}.down{background:var(--red-soft);color:var(--brand-red)}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.bar{background:var(--brand-cyan);border-radius:4px 4px 0 0;width:100%;transition:.3s}
+</style>
+</head>
+<body>
+<div class="lg:flex">
+  <!-- backdrop mobile -->
+  <div id="bd" onclick="closeNav()" class="hidden fixed inset-0 z-40 lg:hidden" style="background:rgba(0,0,0,.4)"></div>
+  <!-- SIDEBAR ADMIN -->
+  <aside id="nav" class="fixed lg:sticky top-0 z-50 lg:z-auto w-64 shrink-0 h-screen p-4 border-r flex flex-col -translate-x-full lg:translate-x-0 transition-transform" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 px-2 py-2 mb-4"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold">Indiko</div><div class="text-[10px]" style="color:var(--text-subtle)">ADMIN · SEAHUB</div></div></div>
+    <nav class="space-y-1 flex-1">
+      <a href="09-admin-visao-geral.html" class="nav-item active"><i data-lucide="layout-dashboard"></i> Visão geral</a>
+      <a href="10-admin-indicacoes.html" class="nav-item"><i data-lucide="git-branch"></i> Indicações</a>
+      <a href="11-admin-resgates.html" class="nav-item"><i data-lucide="banknote"></i> Resgates <span class="ml-auto text-xs font-bold text-white px-1.5 rounded-full font-data" style="background:var(--brand-red)">5</span></a>
+      <a href="12-admin-programas.html" class="nav-item"><i data-lucide="sliders-horizontal"></i> Programas</a>
+      <a href="13-admin-parceiros.html" class="nav-item"><i data-lucide="users"></i> Parceiros</a>
+      <a href="14-admin-webhooks.html" class="nav-item"><i data-lucide="webhook"></i> Webhooks</a>
+    </nav>
+    <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+    <a href="08-login-admin.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+      <div class="flex items-center gap-3"><button onclick="openNav()" class="lg:hidden"><i data-lucide="menu"></i></button><h1 class="text-lg font-bold">Visão geral</h1><select style="font-size:.78rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);margin-left:.5rem"><option>Todos os programas</option><option>Parceria</option><option>IndiQ</option></select></div>
+      <div class="flex items-center gap-3">
+        <select class="text-sm px-3 py-2 rounded-lg" style="background:var(--surface-2);color:var(--text)"><option>Maio 2026</option><option>Abril 2026</option></select>
+        <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style="background:var(--brand-red)">G</div>
+      </div>
+    </header>
+
+    <main class="px-4 lg:px-8 py-6 space-y-6 max-w-7xl">
+      <!-- KPIs -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card p-5"><div class="flex items-center justify-between"><span class="text-sm" style="color:var(--text-muted)">Indicações no mês</span><span class="badge up"><i data-lucide="trending-up" style="width:12px;height:12px"></i> 23%</span></div><p class="text-3xl font-bold font-data mt-2">142</p></div>
+        <div class="card p-5"><div class="flex items-center justify-between"><span class="text-sm" style="color:var(--text-muted)">Taxa de conversão</span><span class="badge up"><i data-lucide="trending-up" style="width:12px;height:12px"></i> 4pp</span></div><p class="text-3xl font-bold font-data mt-2">38%</p></div>
+        <div class="card p-5"><div class="flex items-center justify-between"><span class="text-sm" style="color:var(--text-muted)">Comissão paga</span><span class="badge down"><i data-lucide="trending-up" style="width:12px;height:12px"></i> 12%</span></div><p class="text-3xl font-bold font-data mt-2">R$ 6,4k</p></div>
+        <div class="card p-5"><div class="flex items-center justify-between"><span class="text-sm" style="color:var(--text-muted)">CAC vs. comissão</span><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--success)"></i></div><p class="text-3xl font-bold font-data mt-2" style="color:var(--success)">-41%</p><p class="text-xs mt-1" style="color:var(--text-subtle)">indicação mais barata que ads</p></div>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- gráfico de barras -->
+        <div class="card p-5 lg:col-span-2">
+          <div class="flex items-center justify-between mb-5"><h3 class="font-bold">Indicações por semana</h3><div class="flex items-center gap-3 text-xs"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm" style="background:var(--brand-cyan)"></span>Recebidas</span><span class="flex items-center gap-1.5" style="color:var(--text-muted)"><span class="w-2.5 h-2.5 rounded-sm" style="background:var(--brand-red)"></span>Convertidas</span></div></div>
+          <div class="flex items-end justify-between gap-3 h-44">
+            <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end"><div class="w-full flex gap-1 items-end h-full"><div class="bar" style="height:60%"></div><div class="bar" style="height:24%;background:var(--brand-red)"></div></div><span class="text-xs" style="color:var(--text-subtle)">S1</span></div>
+            <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end"><div class="w-full flex gap-1 items-end h-full"><div class="bar" style="height:75%"></div><div class="bar" style="height:32%;background:var(--brand-red)"></div></div><span class="text-xs" style="color:var(--text-subtle)">S2</span></div>
+            <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end"><div class="w-full flex gap-1 items-end h-full"><div class="bar" style="height:55%"></div><div class="bar" style="height:28%;background:var(--brand-red)"></div></div><span class="text-xs" style="color:var(--text-subtle)">S3</span></div>
+            <div class="flex-1 flex flex-col items-center gap-2 h-full justify-end"><div class="w-full flex gap-1 items-end h-full"><div class="bar" style="height:100%"></div><div class="bar" style="height:45%;background:var(--brand-red)"></div></div><span class="text-xs" style="color:var(--text-subtle)">S4</span></div>
+          </div>
+        </div>
+        <!-- funil -->
+        <div class="card p-5">
+          <h3 class="font-bold mb-4">Funil do mês</h3>
+          <div class="space-y-3">
+            <div><div class="flex justify-between text-sm mb-1"><span>Novas</span><span class="font-data font-semibold">142</span></div><div class="h-2 rounded-full" style="background:var(--brand-cyan);width:100%"></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Em contato</span><span class="font-data font-semibold">98</span></div><div class="h-2 rounded-full" style="background:var(--warning);width:69%"></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Convertidas</span><span class="font-data font-semibold">54</span></div><div class="h-2 rounded-full" style="background:var(--success);width:38%"></div></div>
+            <div><div class="flex justify-between text-sm mb-1"><span>Pagas</span><span class="font-data font-semibold">49</span></div><div class="h-2 rounded-full" style="background:var(--brand-red);width:34%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- top parceiros -->
+      <div class="card p-5">
+        <div class="flex items-center justify-between mb-4"><h3 class="font-bold">Top parceiros do mês</h3><a href="13-admin-parceiros.html" class="text-xs font-semibold" style="color:var(--brand-cyan)">Ver todos</a></div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background:var(--surface-2)"><span class="font-data font-bold" style="color:var(--warning)">1</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">CS</div><div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate">Carla Sales</p><p class="text-xs" style="color:var(--text-subtle)">18 conversões</p></div><span class="text-sm font-data font-semibold">R$ 1,6k</span></div>
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background:var(--surface-2)"><span class="font-data font-bold" style="color:var(--text-subtle)">2</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">RT</div><div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate">Rafael Torres</p><p class="text-xs" style="color:var(--text-subtle)">15 conversões</p></div><span class="text-sm font-data font-semibold">R$ 1,3k</span></div>
+          <div class="flex items-center gap-3 p-3 rounded-xl" style="background:var(--surface-2)"><span class="font-data font-bold" style="color:var(--text-subtle)">3</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">MA</div><div class="flex-1 min-w-0"><p class="text-sm font-semibold truncate">Mariana Albuquerque</p><p class="text-xs" style="color:var(--text-subtle)">12 conversões</p></div><span class="text-sm font-data font-semibold">R$ 1,1k</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function openNav(){document.getElementById('nav').classList.remove('-translate-x-full');document.getElementById('bd').classList.remove('hidden')}
+function closeNav(){document.getElementById('nav').classList.add('-translate-x-full');document.getElementById('bd').classList.add('hidden')}
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

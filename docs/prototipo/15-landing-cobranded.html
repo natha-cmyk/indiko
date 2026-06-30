@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seahub · Mariana indicou você</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-md:0 4px 16px rgba(18,17,17,.08);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.95rem;border-radius:var(--r-md);padding:.85rem 1.5rem;cursor:pointer;transition:.15s;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-primary:hover{background:var(--red-hover);transform:translateY(-1px)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.8rem .9rem;font-size:.95rem;font-family:var(--font-ui)}
+.input:focus{outline:none;border-color:var(--brand-red);box-shadow:0 0 0 3px var(--red-soft)}
+</style>
+</head>
+<body>
+<!-- header -->
+<header class="border-b sticky top-0 z-30" style="background:var(--bg);border-color:var(--border)">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">S</div><span class="font-extrabold">Seahub</span></div>
+    <button onclick="toggleTheme()" class="text-xs flex items-center gap-1.5" style="color:var(--text-subtle)"><i data-lucide="moon" style="width:15px;height:15px"></i></button>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-10 lg:py-16">
+  <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <!-- copy -->
+    <div>
+      <!-- atribuição do parceiro -->
+      <div class="inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full mb-6" style="background:var(--surface-2)">
+        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">MA</div>
+        <span class="text-sm"><strong>Mariana Albuquerque</strong> indicou você 💙</span>
+      </div>
+      <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.05] mb-4">O melhor lugar para trabalhar de Natal te espera.</h1>
+      <p class="text-lg mb-6" style="color:var(--text-muted)">Salas, endereço fiscal, auditórios e uma comunidade de mais de 1.000 empreendedores. E como você veio pela Mariana, tem condição especial.</p>
+      <!-- oferta -->
+      <div class="inline-flex items-center gap-3 p-4 rounded-2xl mb-8" style="background:var(--red-soft);border:1px dashed var(--brand-red)">
+        <i data-lucide="gift" style="color:var(--brand-red)"></i>
+        <div><p class="font-bold" style="color:var(--brand-red)">10% OFF na 1ª mensalidade</p><p class="text-xs" style="color:var(--text-muted)">Cupom <strong class="font-data">MARIANA10</strong> aplicado automaticamente</p></div>
+      </div>
+      <div class="flex items-center gap-6 text-sm" style="color:var(--text-muted)">
+        <span class="flex items-center gap-2"><i data-lucide="map-pin" style="width:16px;height:16px;color:var(--brand-cyan)"></i> 3 unidades</span>
+        <span class="flex items-center gap-2"><i data-lucide="shield-check" style="width:16px;height:16px;color:var(--brand-cyan)"></i> Ativação em 24h</span>
+        <span class="flex items-center gap-2"><i data-lucide="users" style="width:16px;height:16px;color:var(--brand-cyan)"></i> 1.000+ Seahubers</span>
+      </div>
+    </div>
+
+    <!-- form de captura -->
+    <div class="card p-6 lg:p-8" style="box-shadow:var(--shadow-lg)">
+      <h2 class="text-xl font-bold mb-1">Quero conhecer o Seahub</h2>
+      <p class="text-sm mb-6" style="color:var(--text-muted)">Preencha e a gente te chama no WhatsApp com a condição da Mariana.</p>
+      <div class="space-y-4">
+        <div><label class="field-label">Seu nome</label><input class="input" placeholder="Como podemos te chamar?"></div>
+        <div><label class="field-label">WhatsApp</label><input class="input" placeholder="(84) 9 9999-9999"></div>
+        <div><label class="field-label">O que você procura?</label><select class="input"><option>Endereço Fiscal pro meu CNPJ</option><option>Sala privativa / escritório</option><option>Sala de reunião ou atendimento</option><option>Auditório pra evento</option><option>Seabox (receber encomendas)</option><option>Ainda estou pesquisando</option></select></div>
+        <a href="27-lead-sucesso.html" class="btn btn-primary w-full"><i data-lucide="message-circle"></i> Falar com o Seahub</a>
+        <p class="text-xs text-center" style="color:var(--text-subtle)">Sem compromisso. Resposta em até 1 dia útil.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- prova social -->
+  <div class="mt-16 pt-10 border-t" style="border-color:var(--border)">
+    <p class="text-center text-sm font-semibold uppercase tracking-wider mb-6" style="color:var(--text-subtle)">Quem trabalha no Seahub recomenda</p>
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="card p-5"><div class="flex gap-1 mb-2" style="color:var(--warning,#F59E0B)"><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i></div><p class="text-sm" style="color:var(--text-muted)">"Regularizei meu CNPJ em um dia. Estrutura impecável e atendimento humano de verdade."</p><p class="text-xs font-semibold mt-3">— Júlia, designer</p></div>
+      <div class="card p-5"><div class="flex gap-1 mb-2" style="color:var(--warning,#F59E0B)"><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i></div><p class="text-sm" style="color:var(--text-muted)">"Saí de casa e minha produtividade triplicou. A comunidade vale por si só."</p><p class="text-xs font-semibold mt-3">— Marcos, dev</p></div>
+      <div class="card p-5"><div class="flex gap-1 mb-2" style="color:var(--warning,#F59E0B)"><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i><i data-lucide="star" style="width:14px;height:14px;fill:currentColor"></i></div><p class="text-sm" style="color:var(--text-muted)">"Uso o auditório pros meus workshops. Sempre lotado e bem cuidado."</p><p class="text-xs font-semibold mt-3">— Renata, consultora</p></div>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t py-8 text-center text-sm" style="border-color:var(--border);color:var(--text-subtle)">
+  Seahub Coworking · Natal/RN · O melhor lugar para trabalhar no mundo
+</footer>
+
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){document.documentElement.classList.toggle('dark')}
+lucide.createIcons();
+</script>
+</body>
+</html>

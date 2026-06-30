@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Criar ambiente</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.9rem;border-radius:var(--r-md);padding:.8rem 1.25rem;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.7rem .9rem;font-size:.9rem;font-family:var(--font-ui)}
+.step{display:flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:600;color:var(--text-subtle)}
+.step .dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--surface-3);font-family:var(--font-data)}
+.step.on{color:var(--text)}.step.on .dot{background:var(--brand-red);color:#fff}
+.step.done .dot{background:var(--success);color:#fff}
+</style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <header class="border-b px-5 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><span class="font-extrabold">Indiko</span></div>
+    <span class="text-xs" style="color:var(--text-subtle)">Criar ambiente da empresa</span>
+  </header>
+
+  <main class="flex-1 flex items-start justify-center p-6">
+    <div class="w-full max-w-xl">
+      <!-- passos -->
+      <div class="flex items-center justify-between mb-8 px-2">
+        <div class="step done"><span class="dot"><i data-lucide="check" style="width:14px;height:14px"></i></span> Empresa</div>
+        <div class="flex-1 h-px mx-2" style="background:var(--border)"></div>
+        <div class="step on"><span class="dot">2</span> Marca</div>
+        <div class="flex-1 h-px mx-2" style="background:var(--border)"></div>
+        <div class="step"><span class="dot">3</span> Programa</div>
+      </div>
+
+      <div class="card p-7 space-y-5">
+        <div>
+          <h2 class="text-2xl font-bold mb-1">A cara da sua plataforma</h2>
+          <p class="text-sm" style="color:var(--text-muted)">Defina a marca que seus parceiros vão ver. Dá pra ajustar depois.</p>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-xl flex items-center justify-center font-extrabold text-white text-2xl" style="background:var(--brand-red)">S</div>
+          <button class="btn btn-ghost"><i data-lucide="upload" style="width:15px;height:15px"></i> Enviar logo</button>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div><label class="field-label">Cor primária</label><input class="input font-data" value="#FF001E"></div>
+          <div><label class="field-label">Cor secundária</label><input class="input font-data" value="#00BBC5"></div>
+        </div>
+
+        <div>
+          <label class="field-label">Endereço da plataforma</label>
+          <div class="flex items-center"><span class="px-3 py-2 rounded-l-lg text-sm" style="background:var(--surface-2);color:var(--text-subtle)">indiko.app/</span><input class="input font-data" style="border-radius:0 var(--r-md) var(--r-md) 0" value="seahub"></div>
+        </div>
+
+        <div class="flex items-center justify-between pt-3 border-t" style="border-color:var(--border)">
+          <button class="btn btn-ghost"><i data-lucide="arrow-left" style="width:15px;height:15px"></i> Voltar</button>
+          <button class="btn btn-primary">Continuar <i data-lucide="arrow-right" style="width:15px;height:15px"></i></button>
+        </div>
+      </div>
+
+      <p class="text-center text-xs mt-5" style="color:var(--text-subtle)">Etapa 2 de 3 · ao final, seu ambiente é criado e você cai no painel admin</p>
+    </div>
+  </main>
+<script>(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();lucide.createIcons();</script>
+</body>
+</html>

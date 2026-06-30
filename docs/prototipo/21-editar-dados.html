@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Meus dados</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.875rem;border-radius:var(--r-md);padding:.75rem 1.25rem;cursor:pointer;transition:.15s;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-primary:hover{background:var(--red-hover)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{background:var(--surface-2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.7rem .9rem;font-size:.9rem;font-family:var(--font-ui)}
+.input:focus{outline:none;border-color:var(--brand-red);box-shadow:0 0 0 3px var(--red-soft)}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.5rem 0;color:var(--text-subtle);font-size:10px;font-weight:500}.tab.active{color:var(--brand-red);font-weight:600}.tab .lucide{width:20px;height:20px}
+</style>
+</head>
+<body class="lg:flex">
+<aside class="hidden lg:flex flex-col w-60 shrink-0 border-r sticky top-0 h-screen p-4" style="background:var(--bg);border-color:var(--border)">
+  <div class="flex items-center gap-2.5 px-2 py-2 mb-4"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><span class="font-extrabold text-lg">Indiko</span></div>
+  <nav class="space-y-1 flex-1">
+    <a href="02-dashboard-parceiro.html" class="nav-item"><i data-lucide="home"></i> Início</a>
+    <a href="03-indicar.html" class="nav-item"><i data-lucide="plus-circle"></i> Indicar</a>
+    <a href="04-minhas-indicacoes.html" class="nav-item"><i data-lucide="list"></i> Minhas indicações</a>
+    <a href="05-carteira.html" class="nav-item"><i data-lucide="wallet"></i> Carteira</a>
+    <a href="06-resgate.html" class="nav-item"><i data-lucide="banknote"></i> Resgate</a>
+    <a href="07-perfil-materiais.html" class="nav-item active"><i data-lucide="folder"></i> Materiais & perfil</a>
+  </nav>
+  <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+  <a href="01-login-parceiro.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+</aside>
+
+<div class="flex-1 min-w-0 flex flex-col min-h-screen">
+  <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5"><a href="07-perfil-materiais.html"><i data-lucide="arrow-left"></i></a><span class="font-bold">Meus dados</span></div>
+    <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style="background:var(--brand-cyan)">MA</div>
+  </header>
+
+  <main class="flex-1 px-4 lg:px-8 py-6 pb-28 lg:pb-8 max-w-2xl w-full mx-auto space-y-5">
+    <!-- dados pessoais -->
+    <div class="card p-5 space-y-4">
+      <h3 class="font-bold">Dados pessoais</h3>
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center font-bold text-white text-xl" style="background:var(--brand-cyan)">MA</div>
+        <button class="btn btn-ghost btn-sm" style="padding:.5rem .85rem"><i data-lucide="upload" style="width:15px;height:15px"></i> Trocar foto</button>
+      </div>
+      <div><label class="field-label">Nome completo</label><input class="input" value="Mariana Albuquerque"></div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="field-label">WhatsApp</label><input class="input" value="(84) 9 8812-7766"></div>
+        <div><label class="field-label">E-mail</label><input class="input" value="mariana@email.com"></div>
+      </div>
+    </div>
+
+    <!-- chave PIX -->
+    <div class="card p-5 space-y-4">
+      <h3 class="font-bold">Recebimento</h3>
+      <div><label class="field-label">Tipo de chave PIX</label><select class="input"><option>CPF</option><option>E-mail</option><option>Telefone</option><option>Aleatória</option></select></div>
+      <div><label class="field-label">Chave PIX</label><input class="input font-data" value="•••.123.456-••"></div>
+      <div class="flex items-start gap-2.5 p-3 rounded-xl" style="background:var(--warning-soft)"><i data-lucide="alert-triangle" style="width:16px;height:16px;color:var(--warning);flex-shrink:0;margin-top:2px"></i><p class="text-xs" style="color:var(--text-muted)">A chave precisa estar no seu nome. Resgates com chave divergente são bloqueados na análise.</p></div>
+    </div>
+
+    <!-- segurança -->
+    <div class="card p-5 space-y-4">
+      <h3 class="font-bold">Segurança</h3>
+      <div><label class="field-label">Senha atual</label><input type="password" class="input" placeholder="••••••••"></div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div><label class="field-label">Nova senha</label><input type="password" class="input" placeholder="Mínimo 8 caracteres"></div>
+        <div><label class="field-label">Confirmar</label><input type="password" class="input" placeholder="Repita"></div>
+      </div>
+    </div>
+
+    <div class="flex gap-3 justify-end">
+      <a href="07-perfil-materiais.html" class="btn btn-ghost">Cancelar</a>
+      <button class="btn btn-primary"><i data-lucide="save" style="width:16px;height:16px"></i> Salvar alterações</button>
+    </div>
+  </main>
+</div>
+
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t flex items-center px-2" style="background:var(--bg);border-color:var(--border);padding-bottom:env(safe-area-inset-bottom)">
+  <a href="02-dashboard-parceiro.html" class="tab"><i data-lucide="home"></i>Início</a>
+  <a href="04-minhas-indicacoes.html" class="tab"><i data-lucide="list"></i>Indicações</a>
+  <a href="03-indicar.html" class="tab -mt-5"><span class="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" style="background:var(--brand-red)"><i data-lucide="plus" style="width:24px;height:24px"></i></span></a>
+  <a href="05-carteira.html" class="tab"><i data-lucide="wallet"></i>Carteira</a>
+  <a href="07-perfil-materiais.html" class="tab active"><i data-lucide="user"></i>Perfil</a>
+</nav>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

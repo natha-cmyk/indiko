@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Notificações</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.notif{display:flex;gap:.85rem;padding:1rem;align-items:flex-start}
+.ic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.5rem 0;color:var(--text-subtle);font-size:10px;font-weight:500}.tab.active{color:var(--brand-red);font-weight:600}.tab .lucide{width:20px;height:20px}
+</style>
+</head>
+<body class="lg:flex">
+
+<aside class="hidden lg:flex flex-col w-60 shrink-0 border-r sticky top-0 h-screen p-4" style="background:var(--bg);border-color:var(--border)">
+  <div class="flex items-center gap-2.5 px-2 py-2 mb-4"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><span class="font-extrabold text-lg">Indiko</span></div>
+  <nav class="space-y-1 flex-1">
+    <a href="02-dashboard-parceiro.html" class="nav-item"><i data-lucide="home"></i> Início</a>
+    <a href="03-indicar.html" class="nav-item"><i data-lucide="plus-circle"></i> Indicar</a>
+    <a href="04-minhas-indicacoes.html" class="nav-item"><i data-lucide="list"></i> Minhas indicações</a>
+    <a href="05-carteira.html" class="nav-item"><i data-lucide="wallet"></i> Carteira</a>
+    <a href="06-resgate.html" class="nav-item"><i data-lucide="banknote"></i> Resgate</a>
+    <a href="07-perfil-materiais.html" class="nav-item"><i data-lucide="folder"></i> Materiais & perfil</a>
+  </nav>
+  <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+  <a href="01-login-parceiro.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+</aside>
+
+<div class="flex-1 min-w-0 flex flex-col min-h-screen">
+  <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 lg:hidden"><a href="02-dashboard-parceiro.html"><i data-lucide="arrow-left"></i></a><span class="font-bold">Notificações</span></div>
+    <h1 class="hidden lg:block text-lg font-bold">Notificações</h1>
+    <button class="text-sm font-semibold flex items-center gap-1.5" style="color:var(--brand-cyan)"><i data-lucide="check-check" style="width:16px;height:16px"></i> Marcar lidas</button>
+  </header>
+
+  <main class="flex-1 px-4 lg:px-8 py-6 pb-28 lg:pb-8 max-w-2xl w-full mx-auto space-y-5">
+
+    <!-- hoje -->
+    <div>
+      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-subtle)">Hoje</p>
+      <div class="card divide-y">
+        <div class="notif" style="border-bottom:1px solid var(--border);background:var(--red-soft)">
+          <div class="ic" style="background:var(--success-soft)"><i data-lucide="party-popper" style="color:var(--success);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm"><strong>Comissão liberada!</strong> R$ 89,00 de João Petrônio já está disponível para resgate.</p><p class="text-xs mt-1" style="color:var(--text-subtle)">há 2 horas</p></div>
+          <span class="w-2 h-2 rounded-full mt-1.5" style="background:var(--brand-red)"></span>
+        </div>
+        <div class="notif" style="background:var(--red-soft)">
+          <div class="ic" style="background:var(--cyan-soft)"><i data-lucide="user-plus" style="color:var(--brand-cyan);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm"><strong>Nova indicação caiu!</strong> Alguém usou seu link e se cadastrou. Status: <span style="color:var(--brand-cyan);font-weight:600">Nova</span>.</p><p class="text-xs mt-1" style="color:var(--text-subtle)">há 4 horas</p></div>
+          <span class="w-2 h-2 rounded-full mt-1.5" style="background:var(--brand-red)"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ontem -->
+    <div>
+      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-subtle)">Ontem</p>
+      <div class="card divide-y">
+        <div class="notif" style="border-bottom:1px solid var(--border)">
+          <div class="ic" style="background:var(--success-soft)"><i data-lucide="banknote" style="color:var(--success);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm">Seu resgate de <strong>R$ 600,00</strong> foi aprovado e enviado via PIX.</p><p class="text-xs mt-1" style="color:var(--text-subtle)">ontem, 16:20</p></div>
+        </div>
+        <div class="notif" style="border-bottom:1px solid var(--border)">
+          <div class="ic" style="background:var(--success-soft)"><i data-lucide="trending-up" style="color:var(--success);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm">Renata Cavalcante avançou para <strong>Convertida</strong>. Comissão a caminho!</p><p class="text-xs mt-1" style="color:var(--text-subtle)">ontem, 11:05</p></div>
+        </div>
+        <div class="notif">
+          <div class="ic" style="background:var(--warning-soft)"><i data-lucide="trophy" style="color:var(--warning);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm">Você subiu para <strong>3º lugar</strong> no ranking do mês. Bora pro pódio! 🏆</p><p class="text-xs mt-1" style="color:var(--text-subtle)">ontem, 09:30</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- mais antigas -->
+    <div>
+      <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-subtle)">Esta semana</p>
+      <div class="card divide-y">
+        <div class="notif">
+          <div class="ic" style="background:var(--surface-2)"><i data-lucide="info" style="color:var(--text-muted);width:18px;height:18px"></i></div>
+          <div class="flex-1"><p class="text-sm">Novos materiais de divulgação para <strong>Endereço Fiscal</strong> estão disponíveis.</p><p class="text-xs mt-1" style="color:var(--text-subtle)">3 dias atrás</p></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t flex items-center px-2" style="background:var(--bg);border-color:var(--border);padding-bottom:env(safe-area-inset-bottom)">
+  <a href="02-dashboard-parceiro.html" class="tab"><i data-lucide="home"></i>Início</a>
+  <a href="04-minhas-indicacoes.html" class="tab"><i data-lucide="list"></i>Indicações</a>
+  <a href="03-indicar.html" class="tab -mt-5"><span class="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" style="background:var(--brand-red)"><i data-lucide="plus" style="width:24px;height:24px"></i></span></a>
+  <a href="05-carteira.html" class="tab"><i data-lucide="wallet"></i>Carteira</a>
+  <a href="07-perfil-materiais.html" class="tab"><i data-lucide="user"></i>Perfil</a>
+</nav>
+
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

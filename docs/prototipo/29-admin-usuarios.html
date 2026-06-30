@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko Admin · Usuários & papéis</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.8125rem;border-radius:var(--r-md);padding:.6rem .95rem;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-ghost:hover{background:var(--surface-2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:700;padding:.2rem .55rem;border-radius:999px}
+.pa-admin{background:var(--red-soft);color:var(--brand-red)}.pa-op{background:var(--cyan-soft);color:var(--brand-cyan)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.875rem;font-family:var(--font-ui)}
+.seg{padding:.5rem .9rem;font-size:.85rem;font-weight:600;border-radius:var(--r-sm);color:var(--text-muted);text-decoration:none}.seg.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+.tbl{width:100%;border-collapse:collapse;font-size:.875rem}.tbl th{text-align:left;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--text-subtle);padding:.6rem 1rem;border-bottom:1px solid var(--border)}.tbl td{padding:.75rem 1rem;border-bottom:1px solid var(--border)}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+</style>
+</head>
+<body>
+<div class="lg:flex">
+  <div id="bd" onclick="closeNav()" class="hidden fixed inset-0 z-40 lg:hidden" style="background:rgba(0,0,0,.4)"></div>
+  <aside id="nav" class="fixed lg:sticky top-0 z-50 lg:z-auto w-64 shrink-0 h-screen p-4 border-r flex flex-col -translate-x-full lg:translate-x-0 transition-transform" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 px-2 py-2 mb-1"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold">Indiko</div><div class="text-[10px]" style="color:var(--text-subtle)">SEAHUB · ADMIN</div></div></div>
+    <nav class="space-y-1 flex-1 mt-3">
+      <a href="09-admin-visao-geral.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Visão geral</a>
+      <a href="10-admin-indicacoes.html" class="nav-item"><i data-lucide="git-branch"></i> Indicações</a>
+      <a href="11-admin-resgates.html" class="nav-item"><i data-lucide="banknote"></i> Resgates</a>
+      <a href="12-admin-programas.html" class="nav-item"><i data-lucide="sliders-horizontal"></i> Programas</a>
+      <a href="13-admin-parceiros.html" class="nav-item"><i data-lucide="users"></i> Parceiros</a>
+      <a href="31-admin-campanhas.html" class="nav-item"><i data-lucide="megaphone"></i> Campanhas</a>
+      <a href="14-admin-webhooks.html" class="nav-item"><i data-lucide="webhook"></i> Webhooks</a>
+    </nav>
+    <a href="26-admin-configuracoes.html" class="nav-item active"><i data-lucide="settings"></i> Configurações</a>
+    <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+    <a href="08-login-admin.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center gap-3" style="background:var(--bg);border-color:var(--border)">
+      <button onclick="openNav()" class="lg:hidden"><i data-lucide="menu"></i></button>
+      <h1 class="text-lg font-bold">Configurações</h1>
+    </header>
+
+    <main class="px-4 lg:px-8 py-6 max-w-4xl space-y-5">
+      <!-- sub-abas -->
+      <div class="flex gap-1 p-1 rounded-xl w-max" style="background:var(--surface-2)">
+        <a href="26-admin-configuracoes.html" class="seg">Conta</a>
+        <a href="29-admin-usuarios.html" class="seg active">Usuários & papéis</a>
+        <a href="30-admin-personalizacao.html" class="seg">Personalização</a>
+      </div>
+
+      <!-- explicação dos papéis -->
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="card p-4"><div class="flex items-center gap-2 mb-2"><span class="badge pa-admin">Admin</span></div><p class="text-sm" style="color:var(--text-muted)">Controle total: programas, comissões, integrações, personalização, usuários e billing.</p></div>
+        <div class="card p-4"><div class="flex items-center gap-2 mb-2"><span class="badge pa-op">Operação</span></div><p class="text-sm" style="color:var(--text-muted)">Rotina: indicações, resgates e parceiros. Não altera regras, integrações nem usuários.</p></div>
+      </div>
+
+      <!-- lista de usuários -->
+      <div class="card overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b" style="border-color:var(--border)">
+          <h3 class="font-bold">Usuários da equipe</h3>
+          <button class="btn btn-primary"><i data-lucide="user-plus" style="width:15px;height:15px"></i> Convidar</button>
+        </div>
+        <table class="tbl">
+          <thead><tr><th>Usuário</th><th>E-mail</th><th>Papel</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-red)">G</div><span class="font-medium">Guilherme Oliveira</span></div></td><td class="text-xs" style="color:var(--text-muted)">guiga@seahubcoworking.com.br</td><td><span class="badge pa-admin">Admin · Owner</span></td><td></td></tr>
+            <tr><td><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">N</div><span class="font-medium">Nathã</span></div></td><td class="text-xs" style="color:var(--text-muted)">natha@seahubcoworking.com.br</td><td><select class="input" style="width:auto;padding:.3rem .5rem"><option>Admin</option><option>Operação</option></select></td><td><button class="text-xs" style="color:var(--text-subtle)">Remover</button></td></tr>
+            <tr><td><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">P</div><span class="font-medium">Peter (comercial)</span></div></td><td class="text-xs" style="color:var(--text-muted)">peter@seahubcoworking.com.br</td><td><select class="input" style="width:auto;padding:.3rem .5rem"><option selected>Operação</option><option>Admin</option></select></td><td><button class="text-xs" style="color:var(--text-subtle)">Remover</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function openNav(){document.getElementById('nav').classList.remove('-translate-x-full');document.getElementById('bd').classList.remove('hidden')}
+function closeNav(){document.getElementById('nav').classList.add('-translate-x-full');document.getElementById('bd').classList.add('hidden')}
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

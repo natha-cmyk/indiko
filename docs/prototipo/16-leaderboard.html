@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Ranking</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;background:var(--brand-cyan)}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:700;padding:.2rem .55rem;border-radius:999px}
+.lvl-ouro{background:var(--warning-soft);color:var(--warning)}.lvl-prata{background:var(--surface-3);color:var(--text-muted)}
+</style>
+</head>
+<body>
+<header class="border-b sticky top-0 z-30" style="background:var(--bg);border-color:var(--border)">
+  <div class="max-w-3xl mx-auto px-5 h-16 flex items-center justify-between">
+    <a href="02-dashboard-parceiro.html" class="flex items-center gap-2.5"><i data-lucide="arrow-left" style="width:18px;height:18px"></i><span class="font-bold">Ranking</span></a>
+    <button onclick="toggleTheme()" class="text-xs flex items-center gap-1.5" style="color:var(--text-subtle)"><i data-lucide="moon" style="width:15px;height:15px"></i></button>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-5 py-8 space-y-8">
+  <div class="text-center">
+    <h1 class="text-3xl font-extrabold tracking-tight">🏆 Top Indicadores</h1>
+    <p class="text-sm mt-1" style="color:var(--text-muted)">Ranking de maio · reinicia em 3 dias</p>
+  </div>
+
+  <!-- pódio -->
+  <div class="flex items-end justify-center gap-3 sm:gap-5">
+    <!-- 2º -->
+    <div class="flex flex-col items-center">
+      <div class="av w-14 h-14 text-lg mb-2">RT</div>
+      <div class="card w-24 sm:w-28 pt-3 pb-4 text-center rounded-b-none" style="height:120px;background:var(--surface-3)">
+        <div class="text-3xl font-extrabold font-data" style="color:var(--text-subtle)">2</div>
+        <p class="text-xs font-semibold mt-1 px-1 truncate">Rafael T.</p>
+        <p class="text-xs font-data" style="color:var(--text-subtle)">15</p>
+      </div>
+    </div>
+    <!-- 1º -->
+    <div class="flex flex-col items-center">
+      <i data-lucide="crown" style="color:var(--warning);margin-bottom:4px"></i>
+      <div class="av w-16 h-16 text-xl mb-2" style="background:var(--brand-red);box-shadow:0 0 0 3px var(--warning)">CS</div>
+      <div class="card w-28 sm:w-32 pt-3 pb-5 text-center rounded-b-none" style="height:160px;background:var(--warning-soft)">
+        <div class="text-4xl font-extrabold font-data" style="color:var(--warning)">1</div>
+        <p class="text-sm font-bold mt-1 px-1 truncate">Carla Sales</p>
+        <p class="text-xs font-data" style="color:var(--text-muted)">18 conversões</p>
+      </div>
+    </div>
+    <!-- 3º -->
+    <div class="flex flex-col items-center">
+      <div class="av w-14 h-14 text-lg mb-2">MA</div>
+      <div class="card w-24 sm:w-28 pt-3 pb-4 text-center rounded-b-none" style="height:100px;background:var(--surface-3)">
+        <div class="text-3xl font-extrabold font-data" style="color:#C2703D">3</div>
+        <p class="text-xs font-semibold mt-1 px-1 truncate">Mariana A.</p>
+        <p class="text-xs font-data" style="color:var(--text-subtle)">12</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- restante 4-10 -->
+  <div class="card divide-y">
+    <div class="p-3.5 flex items-center gap-3" style="border-bottom:1px solid var(--border)"><span class="w-6 text-center font-data font-bold" style="color:var(--text-subtle)">4</span><div class="av w-9 h-9 text-xs">BL</div><span class="text-sm flex-1 font-medium">Bruno Lima</span><span class="badge lvl-prata">Prata</span><span class="font-data text-sm font-semibold w-8 text-right">10</span></div>
+    <div class="p-3.5 flex items-center gap-3" style="border-bottom:1px solid var(--border)"><span class="w-6 text-center font-data font-bold" style="color:var(--text-subtle)">5</span><div class="av w-9 h-9 text-xs">JS</div><span class="text-sm flex-1 font-medium">Júlia Santos</span><span class="badge lvl-prata">Prata</span><span class="font-data text-sm font-semibold w-8 text-right">9</span></div>
+    <div class="p-3.5 flex items-center gap-3" style="border-bottom:1px solid var(--border)"><span class="w-6 text-center font-data font-bold" style="color:var(--text-subtle)">6</span><div class="av w-9 h-9 text-xs">PA</div><span class="text-sm flex-1 font-medium">Paulo Andrade</span><span class="badge lvl-prata">Prata</span><span class="font-data text-sm font-semibold w-8 text-right">7</span></div>
+    <div class="p-3.5 flex items-center gap-3" style="border-bottom:1px solid var(--border)"><span class="w-6 text-center font-data font-bold" style="color:var(--text-subtle)">7</span><div class="av w-9 h-9 text-xs">LF</div><span class="text-sm flex-1 font-medium">Letícia Freire</span><span class="font-data text-sm font-semibold w-8 text-right">6</span></div>
+    <div class="p-3.5 flex items-center gap-3"><span class="w-6 text-center font-data font-bold" style="color:var(--text-subtle)">8</span><div class="av w-9 h-9 text-xs">DC</div><span class="text-sm flex-1 font-medium">Diego Costa</span><span class="font-data text-sm font-semibold w-8 text-right">5</span></div>
+  </div>
+
+  <!-- níveis e conquistas -->
+  <div>
+    <h3 class="font-bold mb-3">Níveis & conquistas</h3>
+    <div class="grid sm:grid-cols-3 gap-3 mb-4">
+      <div class="card p-4 text-center"><div class="w-10 h-10 rounded-full mx-auto flex items-center justify-center mb-2" style="background:#C2703D26"><i data-lucide="award" style="color:#C2703D;width:18px;height:18px"></i></div><p class="text-sm font-bold">Bronze</p><p class="text-xs" style="color:var(--text-subtle)">0–5 conversões</p></div>
+      <div class="card p-4 text-center"><div class="w-10 h-10 rounded-full mx-auto flex items-center justify-center mb-2" style="background:var(--surface-3)"><i data-lucide="award" style="color:var(--text-muted);width:18px;height:18px"></i></div><p class="text-sm font-bold">Prata</p><p class="text-xs" style="color:var(--text-subtle)">6–15 conversões</p></div>
+      <div class="card p-4 text-center" style="border-color:var(--warning)"><div class="w-10 h-10 rounded-full mx-auto flex items-center justify-center mb-2" style="background:var(--warning-soft)"><i data-lucide="award" style="color:var(--warning);width:18px;height:18px"></i></div><p class="text-sm font-bold">Ouro</p><p class="text-xs" style="color:var(--text-subtle)">16+ · comissão +5%</p></div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="badge" style="background:var(--cyan-soft);color:var(--brand-cyan)"><i data-lucide="zap" style="width:12px;height:12px"></i> 1ª indicação</span>
+      <span class="badge" style="background:var(--success-soft);color:var(--success)"><i data-lucide="flame" style="width:12px;height:12px"></i> 5 em sequência</span>
+      <span class="badge" style="background:var(--warning-soft);color:var(--warning)"><i data-lucide="trophy" style="width:12px;height:12px"></i> Top 3 do mês</span>
+      <span class="badge" style="background:var(--surface-3);color:var(--text-subtle)"><i data-lucide="lock" style="width:12px;height:12px"></i> 50 conversões</span>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){document.documentElement.classList.toggle('dark')}
+lucide.createIcons();
+</script>
+</body>
+</html>

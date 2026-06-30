@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indiko · Design System — Seahub</title>
+
+  <!-- Stack obrigatório do projeto -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Montserrat (tipografia oficial Seahub) + Inter (alternativa do prompt, carregada p/ comparação) -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <style>
+    /* ============================================================
+       INDIKO · DESIGN SYSTEM
+       Tokens de marca Seahub + camada semântica clara/escura
+       ============================================================ */
+
+    /* --- Cores de MARCA (fixas, nunca mudam entre temas) --- */
+    :root {
+      --brand-red:   #FF001E;  /* ação primária, CTA, destaque */
+      --brand-cyan:  #00BBC5;  /* secundária, links, info */
+      --brand-black: #121111;  /* texto/headers no claro */
+      --brand-gray:  #EDEDEC;  /* superfícies neutras */
+      --brand-white: #FFFFFF;
+
+      /* derivações da marca */
+      --red-soft:    #FF001E14; /* 8% */
+      --red-hover:   #E00019;
+      --cyan-soft:   #00BBC514;
+      --cyan-hover:  #00A2AB;
+
+      /* --- Cores FUNCIONAIS (introduzidas p/ estados de produto) --- */
+      --success:      #16A34A;
+      --success-soft: #16A34A1A;
+      --warning:      #F59E0B;
+      --warning-soft: #F59E0B1F;
+
+      /* tipografia */
+      --font-ui: 'Montserrat', system-ui, sans-serif;   /* trocar p/ 'Inter' aqui se desejar */
+      --font-data: 'Inter', var(--font-ui);             /* números densos / tabelas */
+
+      /* raios e sombras */
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --shadow-sm: 0 1px 2px rgba(18,17,17,.06), 0 1px 3px rgba(18,17,17,.04);
+      --shadow-md: 0 4px 16px rgba(18,17,17,.08), 0 2px 6px rgba(18,17,17,.04);
+      --shadow-lg: 0 12px 40px rgba(18,17,17,.12);
+    }
+
+    /* --- TEMA CLARO --- */
+    :root, .light {
+      --bg:          #FFFFFF;
+      --bg-subtle:   #F7F7F6;
+      --surface:     #FFFFFF;
+      --surface-2:   #F2F2F1;
+      --surface-3:   #EDEDEC;
+      --border:      #E6E6E4;
+      --border-strong:#D6D6D3;
+      --text:        #121111;
+      --text-muted:  #6B6B6B;
+      --text-subtle: #9A9A98;
+      --ring:        #FF001E;
+    }
+
+    /* --- TEMA ESCURO --- */
+    .dark {
+      --bg:          #0E0D0D;
+      --bg-subtle:   #161515;
+      --surface:     #1A1919;
+      --surface-2:   #232222;
+      --surface-3:   #2C2A2A;
+      --border:      #2E2C2C;
+      --border-strong:#3A3838;
+      --text:        #EDEDEC;
+      --text-muted:  #9A9A98;
+      --text-subtle: #6B6B6B;
+      --ring:        #FF001E;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.5);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,.6);
+      --red-soft:  #FF001E26;
+      --cyan-soft: #00BBC526;
+    }
+
+    * { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color .25s ease, color .25s ease;
+    }
+
+    .font-data { font-family: var(--font-data); font-feature-settings: "tnum" 1; }
+
+    /* ---------- BOTÕES ---------- */
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+      font-weight:600; font-size:.875rem; line-height:1; border-radius:var(--r-md);
+      padding:.75rem 1.25rem; cursor:pointer; transition:all .15s ease; border:1px solid transparent;
+      white-space:nowrap; }
+    .btn:focus-visible { outline:none; box-shadow:0 0 0 3px var(--red-soft); }
+    .btn-sm { padding:.5rem .875rem; font-size:.8125rem; border-radius:var(--r-sm); }
+    .btn-lg { padding:.9rem 1.5rem; font-size:.9375rem; }
+
+    .btn-primary { background:var(--brand-red); color:#fff; }
+    .btn-primary:hover { background:var(--red-hover); transform:translateY(-1px); box-shadow:0 6px 18px var(--red-soft); }
+    .btn-primary:active { transform:translateY(0); }
+
+    .btn-secondary { background:transparent; color:var(--brand-cyan); border-color:var(--brand-cyan); }
+    .btn-secondary:hover { background:var(--cyan-soft); }
+
+    .btn-ghost { background:transparent; color:var(--text); }
+    .btn-ghost:hover { background:var(--surface-2); }
+
+    .btn-dark { background:var(--text); color:var(--bg); }
+    .btn-dark:hover { opacity:.88; }
+
+    .btn:disabled, .btn[disabled] { opacity:.45; cursor:not-allowed; transform:none !important; box-shadow:none !important; }
+
+    /* ---------- INPUTS ---------- */
+    .field-label { display:block; font-size:.8125rem; font-weight:600; margin-bottom:.4rem; color:var(--text); }
+    .input { width:100%; background:var(--surface); color:var(--text); border:1px solid var(--border);
+      border-radius:var(--r-md); padding:.7rem .9rem; font-size:.9rem; font-family:var(--font-ui);
+      transition:border-color .15s, box-shadow .15s; }
+    .input::placeholder { color:var(--text-subtle); }
+    .input:focus { outline:none; border-color:var(--brand-red); box-shadow:0 0 0 3px var(--red-soft); }
+    .input:disabled { background:var(--surface-2); color:var(--text-subtle); cursor:not-allowed; }
+    .input-error { border-color:var(--brand-red); }
+    .input-icon-wrap { position:relative; }
+    .input-icon-wrap .lucide { position:absolute; left:.85rem; top:50%; transform:translateY(-50%);
+      width:18px; height:18px; color:var(--text-subtle); pointer-events:none; }
+    .input-icon-wrap .input { padding-left:2.6rem; }
+
+    /* toggle switch */
+    .switch { position:relative; display:inline-block; width:42px; height:24px; }
+    .switch input { display:none; }
+    .switch .slider { position:absolute; inset:0; background:var(--surface-3); border-radius:999px; transition:.2s; }
+    .switch .slider::before { content:""; position:absolute; height:18px; width:18px; left:3px; top:3px;
+      background:#fff; border-radius:50%; transition:.2s; box-shadow:var(--shadow-sm); }
+    .switch input:checked + .slider { background:var(--brand-red); }
+    .switch input:checked + .slider::before { transform:translateX(18px); }
+
+    /* ---------- CARDS ---------- */
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg);
+      box-shadow:var(--shadow-sm); }
+
+    /* ---------- BADGES ---------- */
+    .badge { display:inline-flex; align-items:center; gap:.35rem; font-size:.72rem; font-weight:700;
+      padding:.3rem .6rem; border-radius:999px; letter-spacing:.01em; }
+    .badge-dot { width:6px; height:6px; border-radius:50%; }
+    .badge-nova      { background:var(--cyan-soft);    color:var(--brand-cyan); }
+    .badge-contato   { background:var(--warning-soft); color:var(--warning); }
+    .badge-convertida{ background:var(--success-soft); color:var(--success); }
+    .badge-paga      { background:var(--success);      color:#fff; }
+    .badge-perdida   { background:var(--surface-3);    color:var(--text-muted); }
+    .badge-info      { background:var(--cyan-soft);    color:var(--brand-cyan); }
+    .badge-danger    { background:var(--red-soft);     color:var(--brand-red); }
+
+    /* ---------- TABELA ---------- */
+    .tbl { width:100%; border-collapse:collapse; font-size:.875rem; }
+    .tbl thead th { text-align:left; font-size:.72rem; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; color:var(--text-subtle); padding:.75rem 1rem; border-bottom:1px solid var(--border); }
+    .tbl tbody td { padding:.85rem 1rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .tbl tbody tr:last-child td { border-bottom:none; }
+    .tbl tbody tr:hover { background:var(--surface-2); }
+
+    /* ---------- NAV ---------- */
+    .nav-item { display:flex; align-items:center; gap:.75rem; padding:.65rem .85rem; border-radius:var(--r-md);
+      font-size:.9rem; font-weight:500; color:var(--text-muted); cursor:pointer; transition:.15s; }
+    .nav-item:hover { background:var(--surface-2); color:var(--text); }
+    .nav-item.active { background:var(--red-soft); color:var(--brand-red); font-weight:600; }
+    .nav-item.active .lucide { color:var(--brand-red); }
+    .nav-item .lucide { width:18px; height:18px; }
+
+    /* ---------- DECORATIVO ---------- */
+    .swatch { height:108px; border-radius:var(--r-md); display:flex; align-items:flex-end; padding:.75rem;
+      border:1px solid var(--border); }
+    .section-anchor { scroll-margin-top:90px; }
+    .sidebar-link { display:block; font-size:.85rem; color:var(--text-muted); padding:.3rem 0; transition:.15s; }
+    .sidebar-link:hover { color:var(--brand-red); }
+    .grain::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.025; z-index:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  </style>
+</head>
+
+<body class="grain">
+
+  <!-- ====================== HEADER ====================== -->
+  <header class="sticky top-0 z-40 border-b" style="background:var(--bg); border-color:var(--border);">
+    <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red);">in</div>
+        <div class="leading-tight">
+          <div class="font-extrabold tracking-tight">Indiko</div>
+          <div class="text-xs" style="color:var(--text-subtle)">Design System · Seahub</div>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="hidden sm:inline text-xs" style="color:var(--text-subtle)">v0.1 · referência de UI</span>
+        <button onclick="toggleTheme()" class="btn btn-ghost btn-sm" id="themeBtn" aria-label="Alternar tema">
+          <i data-lucide="moon"></i><span id="themeLabel">Escuro</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="max-w-7xl mx-auto px-5 flex gap-10 relative z-10">
+
+    <!-- ====================== SIDEBAR DE ÍNDICE ====================== -->
+    <aside class="hidden lg:block w-48 shrink-0 py-10 sticky top-16 self-start" style="height:max-content;">
+      <p class="text-xs font-bold uppercase tracking-widest mb-3" style="color:var(--text-subtle)">Índice</p>
+      <nav>
+        <a href="#cores" class="sidebar-link">Cores</a>
+        <a href="#tipografia" class="sidebar-link">Tipografia</a>
+        <a href="#botoes" class="sidebar-link">Botões</a>
+        <a href="#inputs" class="sidebar-link">Inputs</a>
+        <a href="#cards" class="sidebar-link">Cards</a>
+        <a href="#badges" class="sidebar-link">Badges & Status</a>
+        <a href="#tabela" class="sidebar-link">Tabela</a>
+        <a href="#nav" class="sidebar-link">Navegação</a>
+        <a href="#modal" class="sidebar-link">Modal</a>
+        <a href="#estados" class="sidebar-link">Estados</a>
+      </nav>
+    </aside>
+
+    <!-- ====================== CONTEÚDO ====================== -->
+    <main class="flex-1 min-w-0 py-10 space-y-20">
+
+      <!-- INTRO -->
+      <section>
+        <span class="badge badge-danger mb-4"><span class="badge-dot" style="background:var(--brand-red)"></span> Style Guide</span>
+        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-none mb-4">Indiko Design System</h1>
+        <p class="text-lg max-w-2xl" style="color:var(--text-muted)">
+          Fundação visual do programa de indicação do Seahub. Tudo aqui é a base das 19 telas — cores, tipografia e componentes. Funciona em <strong style="color:var(--text)">modo claro e escuro</strong>.
+        </p>
+      </section>
+
+      <!-- CORES -->
+      <section id="cores" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Cores</h2>
+        <p class="mb-6" style="color:var(--text-muted)">As 5 cores de marca Seahub são fixas nos dois temas. As funcionais foram adicionadas só para estados de produto.</p>
+
+        <h3 class="text-sm font-bold uppercase tracking-wider mb-4" style="color:var(--text-subtle)">Marca Seahub</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+          <div>
+            <div class="swatch" style="background:#FF001E"><span class="text-white text-xs font-bold font-data">FF001E</span></div>
+            <p class="mt-2 text-sm font-semibold">Vermelho</p><p class="text-xs" style="color:var(--text-subtle)">Ação primária · CTA</p>
+          </div>
+          <div>
+            <div class="swatch" style="background:#00BBC5"><span class="text-white text-xs font-bold font-data">00BBC5</span></div>
+            <p class="mt-2 text-sm font-semibold">Azul</p><p class="text-xs" style="color:var(--text-subtle)">Secundária · links · info</p>
+          </div>
+          <div>
+            <div class="swatch" style="background:#121111"><span class="text-white text-xs font-bold font-data">121111</span></div>
+            <p class="mt-2 text-sm font-semibold">Preto</p><p class="text-xs" style="color:var(--text-subtle)">Texto · headers</p>
+          </div>
+          <div>
+            <div class="swatch" style="background:#EDEDEC"><span class="text-xs font-bold font-data" style="color:#121111">EDEDEC</span></div>
+            <p class="mt-2 text-sm font-semibold">Cinza</p><p class="text-xs" style="color:var(--text-subtle)">Superfícies neutras</p>
+          </div>
+          <div>
+            <div class="swatch" style="background:#FFFFFF"><span class="text-xs font-bold font-data" style="color:#121111">FFFFFF</span></div>
+            <p class="mt-2 text-sm font-semibold">Branco</p><p class="text-xs" style="color:var(--text-subtle)">Base de cards</p>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-bold uppercase tracking-wider mb-4" style="color:var(--text-subtle)">Funcionais <span class="font-normal normal-case tracking-normal">(adicionadas — não são cores de marca)</span></h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-10">
+          <div>
+            <div class="swatch" style="background:#16A34A"><span class="text-white text-xs font-bold font-data">16A34A</span></div>
+            <p class="mt-2 text-sm font-semibold">Verde</p><p class="text-xs" style="color:var(--text-subtle)">Sucesso · convertida/paga</p>
+          </div>
+          <div>
+            <div class="swatch" style="background:#F59E0B"><span class="text-white text-xs font-bold font-data">F59E0B</span></div>
+            <p class="mt-2 text-sm font-semibold">Âmbar</p><p class="text-xs" style="color:var(--text-subtle)">Aviso · em contato</p>
+          </div>
+        </div>
+
+        <h3 class="text-sm font-bold uppercase tracking-wider mb-4" style="color:var(--text-subtle)">Tokens semânticos (viram com o tema)</h3>
+        <div class="card p-5 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-data">
+          <div><div class="h-10 rounded-lg border mb-2" style="background:var(--bg);border-color:var(--border)"></div>--bg</div>
+          <div><div class="h-10 rounded-lg border mb-2" style="background:var(--surface);border-color:var(--border)"></div>--surface</div>
+          <div><div class="h-10 rounded-lg border mb-2" style="background:var(--surface-2);border-color:var(--border)"></div>--surface-2</div>
+          <div><div class="h-10 rounded-lg border mb-2" style="background:var(--surface-3);border-color:var(--border)"></div>--surface-3</div>
+        </div>
+      </section>
+
+      <!-- TIPOGRAFIA -->
+      <section id="tipografia" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Tipografia</h2>
+        <p class="mb-6" style="color:var(--text-muted)"><strong style="color:var(--text)">Montserrat</strong> como tipografia primária (padrão de marca Seahub). <span class="font-data">Inter</span> reservada para dados numéricos densos. Troca via <code class="font-data text-xs px-1.5 py-0.5 rounded" style="background:var(--surface-3)">--font-ui</code>.</p>
+        <div class="card p-7 space-y-5">
+          <div class="flex items-baseline justify-between border-b pb-4" style="border-color:var(--border)">
+            <span class="text-5xl font-extrabold tracking-tight">Indique. Ganhe.</span>
+            <span class="text-xs font-data" style="color:var(--text-subtle)">Display · 800 · 48px</span>
+          </div>
+          <div class="flex items-baseline justify-between border-b pb-4" style="border-color:var(--border)">
+            <span class="text-3xl font-bold tracking-tight">Título de seção</span>
+            <span class="text-xs font-data" style="color:var(--text-subtle)">H2 · 700 · 30px</span>
+          </div>
+          <div class="flex items-baseline justify-between border-b pb-4" style="border-color:var(--border)">
+            <span class="text-xl font-semibold">Subtítulo de card</span>
+            <span class="text-xs font-data" style="color:var(--text-subtle)">H3 · 600 · 20px</span>
+          </div>
+          <div class="flex items-baseline justify-between border-b pb-4" style="border-color:var(--border)">
+            <span class="text-base" style="color:var(--text-muted)">Corpo de texto padrão para descrições, parágrafos e microcopy do app.</span>
+            <span class="text-xs font-data shrink-0 ml-4" style="color:var(--text-subtle)">Body · 400 · 16px</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <span class="text-2xl font-bold font-data">R$ 1.240,00</span>
+            <span class="text-xs font-data" style="color:var(--text-subtle)">Inter · valores monetários</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOTÕES -->
+      <section id="botoes" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Botões</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Primário sempre no vermelho Seahub. Um CTA primário por tela, no máximo.</p>
+        <div class="card p-7 space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="btn btn-primary"><i data-lucide="plus"></i> Indicar agora</button>
+            <button class="btn btn-secondary"><i data-lucide="copy"></i> Copiar link</button>
+            <button class="btn btn-ghost"><i data-lucide="settings"></i> Configurar</button>
+            <button class="btn btn-dark"><i data-lucide="download"></i> Exportar</button>
+            <button class="btn btn-primary" disabled>Desativado</button>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 pt-2 border-t" style="border-color:var(--border)">
+            <button class="btn btn-primary btn-sm">Pequeno</button>
+            <button class="btn btn-primary">Médio</button>
+            <button class="btn btn-primary btn-lg">Grande</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- INPUTS -->
+      <section id="inputs" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Inputs & formulários</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Foco em vermelho. Sempre com label visível.</p>
+        <div class="card p-7 grid sm:grid-cols-2 gap-6">
+          <div>
+            <label class="field-label">Nome completo</label>
+            <input class="input" placeholder="Ex: Mariana Albuquerque" />
+          </div>
+          <div>
+            <label class="field-label">E-mail</label>
+            <div class="input-icon-wrap"><i data-lucide="mail"></i><input class="input" placeholder="voce@email.com" /></div>
+          </div>
+          <div>
+            <label class="field-label">Produto indicado</label>
+            <select class="input"><option>Endereço Fiscal</option><option>Sala Privativa</option><option>Seabox</option><option>Auditório</option></select>
+          </div>
+          <div>
+            <label class="field-label" style="color:var(--brand-red)">CPF (inválido)</label>
+            <input class="input input-error" value="000.000.000-00" />
+            <p class="text-xs mt-1.5" style="color:var(--brand-red)">CPF não confere. Verifique os dígitos.</p>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="field-label">Observação</label>
+            <textarea class="input" rows="3" placeholder="Contexto da indicação..."></textarea>
+          </div>
+          <div class="flex items-center gap-3">
+            <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+            <span class="text-sm">Receber notificação por WhatsApp</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <input type="checkbox" checked class="w-4 h-4 accent-[#FF001E]" />
+            <span class="text-sm">Aceito os termos do programa</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CARDS -->
+      <section id="cards" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Cards</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Base de todas as telas: KPI, carteira e parceiro.</p>
+        <div class="grid sm:grid-cols-3 gap-5">
+          <!-- stat card -->
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-sm" style="color:var(--text-muted)">Saldo disponível</span>
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--red-soft)"><i data-lucide="wallet" style="color:var(--brand-red);width:16px;height:16px"></i></div>
+            </div>
+            <p class="text-3xl font-bold font-data">R$ 1.240,00</p>
+            <p class="text-xs mt-1 flex items-center gap-1" style="color:var(--success)"><i data-lucide="trending-up" style="width:14px;height:14px"></i> +18% no mês</p>
+          </div>
+          <!-- stat card -->
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-sm" style="color:var(--text-muted)">Indicações ativas</span>
+              <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--cyan-soft)"><i data-lucide="users" style="color:var(--brand-cyan);width:16px;height:16px"></i></div>
+            </div>
+            <p class="text-3xl font-bold font-data">7</p>
+            <p class="text-xs mt-1" style="color:var(--text-subtle)">3 em negociação</p>
+          </div>
+          <!-- partner card -->
+          <div class="card p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-11 h-11 rounded-full flex items-center justify-center font-bold text-white" style="background:var(--brand-cyan)">MA</div>
+              <div><p class="font-semibold text-sm leading-tight">Mariana Albuquerque</p><p class="text-xs" style="color:var(--text-subtle)">Parceira · Nível Ouro</p></div>
+            </div>
+            <div class="flex items-center justify-between text-xs pt-3 border-t" style="border-color:var(--border)">
+              <span style="color:var(--text-muted)">12 conversões</span>
+              <span class="badge badge-paga"><i data-lucide="award" style="width:12px;height:12px"></i> Top 3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BADGES -->
+      <section id="badges" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Badges & status do pipeline</h2>
+        <p class="mb-6" style="color:var(--text-muted)">O ciclo de vida da indicação. Cada status tem cor própria e consistente em todo o app.</p>
+        <div class="card p-7 space-y-6">
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="badge badge-nova"><span class="badge-dot" style="background:var(--brand-cyan)"></span> Nova</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--text-subtle)"></i>
+            <span class="badge badge-contato"><span class="badge-dot" style="background:var(--warning)"></span> Em contato</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--text-subtle)"></i>
+            <span class="badge badge-convertida"><span class="badge-dot" style="background:var(--success)"></span> Convertida</span>
+            <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--text-subtle)"></i>
+            <span class="badge badge-paga"><i data-lucide="check" style="width:12px;height:12px"></i> Paga</span>
+            <i data-lucide="x" style="width:16px;height:16px;color:var(--text-subtle)"></i>
+            <span class="badge badge-perdida"><span class="badge-dot" style="background:var(--text-subtle)"></span> Perdida</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 pt-4 border-t" style="border-color:var(--border)">
+            <span class="badge badge-info"><i data-lucide="info" style="width:12px;height:12px"></i> Informativo</span>
+            <span class="badge badge-danger"><i data-lucide="flag" style="width:12px;height:12px"></i> Anti-fraude</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- TABELA -->
+      <section id="tabela" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Tabela</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Padrão para listas de indicações, parceiros e resgates.</p>
+        <div class="card overflow-hidden">
+          <table class="tbl">
+            <thead><tr><th>Indicado</th><th>Produto</th><th>Status</th><th class="text-right">Comissão</th></tr></thead>
+            <tbody>
+              <tr><td><div class="font-medium">João Petrônio</div><div class="text-xs" style="color:var(--text-subtle)">12/05/2026</div></td><td>Endereço Fiscal</td><td><span class="badge badge-paga"><i data-lucide="check" style="width:12px;height:12px"></i> Paga</span></td><td class="text-right font-data font-semibold">R$ 89,00</td></tr>
+              <tr><td><div class="font-medium">Renata Cavalcante</div><div class="text-xs" style="color:var(--text-subtle)">14/05/2026</div></td><td>Sala Privativa</td><td><span class="badge badge-convertida"><span class="badge-dot" style="background:var(--success)"></span> Convertida</span></td><td class="text-right font-data font-semibold">R$ 150,00</td></tr>
+              <tr><td><div class="font-medium">Diego Fontes</div><div class="text-xs" style="color:var(--text-subtle)">18/05/2026</div></td><td>Seabox</td><td><span class="badge badge-contato"><span class="badge-dot" style="background:var(--warning)"></span> Em contato</span></td><td class="text-right font-data" style="color:var(--text-subtle)">—</td></tr>
+              <tr><td><div class="font-medium">Aline Souza</div><div class="text-xs" style="color:var(--text-subtle)">20/05/2026</div></td><td>Auditório</td><td><span class="badge badge-nova"><span class="badge-dot" style="background:var(--brand-cyan)"></span> Nova</span></td><td class="text-right font-data" style="color:var(--text-subtle)">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- NAV -->
+      <section id="nav" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Navegação</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Sidebar (admin desktop) e tab bar (parceiro mobile).</p>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="card p-4">
+            <p class="text-xs font-bold uppercase tracking-wider mb-3 px-2" style="color:var(--text-subtle)">Sidebar</p>
+            <nav class="space-y-1">
+              <div class="nav-item active"><i data-lucide="layout-dashboard"></i> Visão geral</div>
+              <div class="nav-item"><i data-lucide="git-branch"></i> Indicações</div>
+              <div class="nav-item"><i data-lucide="banknote"></i> Resgates</div>
+              <div class="nav-item"><i data-lucide="users"></i> Parceiros</div>
+              <div class="nav-item"><i data-lucide="webhook"></i> Webhooks</div>
+            </nav>
+          </div>
+          <div class="card p-0 overflow-hidden flex flex-col justify-between">
+            <div class="p-5 text-sm" style="color:var(--text-muted)">Conteúdo da tela do parceiro…</div>
+            <div class="flex border-t" style="border-color:var(--border)">
+              <div class="flex-1 flex flex-col items-center gap-1 py-3" style="color:var(--brand-red)"><i data-lucide="home" style="width:20px;height:20px"></i><span class="text-[10px] font-semibold">Início</span></div>
+              <div class="flex-1 flex flex-col items-center gap-1 py-3" style="color:var(--text-subtle)"><i data-lucide="list" style="width:20px;height:20px"></i><span class="text-[10px]">Indicações</span></div>
+              <div class="flex-1 flex flex-col items-center gap-1 py-3" style="color:var(--text-subtle)"><i data-lucide="wallet" style="width:20px;height:20px"></i><span class="text-[10px]">Carteira</span></div>
+              <div class="flex-1 flex flex-col items-center gap-1 py-3" style="color:var(--text-subtle)"><i data-lucide="user" style="width:20px;height:20px"></i><span class="text-[10px]">Perfil</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL -->
+      <section id="modal" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Modal</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Confirmações e ações sensíveis (ex.: aprovar resgate).</p>
+        <button class="btn btn-primary" onclick="document.getElementById('demoModal').classList.remove('hidden')"><i data-lucide="eye"></i> Ver modal</button>
+        <!-- exemplo estático inline -->
+        <div class="card p-6 mt-6 max-w-md mx-auto" style="box-shadow:var(--shadow-lg)">
+          <div class="w-11 h-11 rounded-full flex items-center justify-center mb-4" style="background:var(--success-soft)"><i data-lucide="check-circle" style="color:var(--success)"></i></div>
+          <h3 class="text-lg font-bold mb-1">Aprovar resgate?</h3>
+          <p class="text-sm mb-5" style="color:var(--text-muted)">O valor de <strong class="font-data" style="color:var(--text)">R$ 240,00</strong> será enviado via PIX para Mariana Albuquerque. Esta ação não pode ser desfeita.</p>
+          <div class="flex gap-3 justify-end">
+            <button class="btn btn-ghost btn-sm">Cancelar</button>
+            <button class="btn btn-primary btn-sm">Confirmar PIX</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ESTADOS -->
+      <section id="estados" class="section-anchor">
+        <h2 class="text-2xl font-bold tracking-tight mb-1">Estados</h2>
+        <p class="mb-6" style="color:var(--text-muted)">Vazio, carregando, erro e sucesso — obrigatórios em todas as telas.</p>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <!-- vazio -->
+          <div class="card p-8 text-center">
+            <div class="w-12 h-12 mx-auto rounded-full flex items-center justify-center mb-3" style="background:var(--surface-2)"><i data-lucide="inbox" style="color:var(--text-subtle)"></i></div>
+            <p class="font-semibold text-sm">Nenhuma indicação ainda</p>
+            <p class="text-xs mt-1 mb-4" style="color:var(--text-subtle)">Compartilhe seu link e comece a ganhar.</p>
+            <button class="btn btn-primary btn-sm">Indicar agora</button>
+          </div>
+          <!-- loading skeleton -->
+          <div class="card p-5">
+            <p class="text-xs font-bold uppercase tracking-wider mb-3" style="color:var(--text-subtle)">Carregando</p>
+            <div class="space-y-3">
+              <div class="h-4 rounded animate-pulse" style="background:var(--surface-3);width:80%"></div>
+              <div class="h-4 rounded animate-pulse" style="background:var(--surface-3);width:60%"></div>
+              <div class="h-4 rounded animate-pulse" style="background:var(--surface-3);width:90%"></div>
+            </div>
+          </div>
+          <!-- erro -->
+          <div class="card p-5 flex items-start gap-3" style="border-color:var(--brand-red)">
+            <i data-lucide="alert-circle" style="color:var(--brand-red);flex-shrink:0"></i>
+            <div><p class="font-semibold text-sm" style="color:var(--brand-red)">Não foi possível carregar</p><p class="text-xs mt-0.5" style="color:var(--text-muted)">Verifique a conexão e tente novamente.</p></div>
+          </div>
+          <!-- sucesso -->
+          <div class="card p-5 flex items-start gap-3" style="border-color:var(--success)">
+            <i data-lucide="check-circle" style="color:var(--success);flex-shrink:0"></i>
+            <div><p class="font-semibold text-sm" style="color:var(--success)">Resgate solicitado!</p><p class="text-xs mt-0.5" style="color:var(--text-muted)">Você recebe o PIX em até 2 dias úteis.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="pt-10 border-t text-xs flex items-center justify-between" style="border-color:var(--border);color:var(--text-subtle)">
+        <span>Indiko · Seahub Coworking — Natal/RN</span>
+        <span class="font-data">00-design-system.html</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- MODAL OVERLAY (demo) -->
+  <div id="demoModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background:rgba(18,17,17,.6)">
+    <div class="card p-6 max-w-md w-full" style="box-shadow:var(--shadow-lg)">
+      <div class="w-11 h-11 rounded-full flex items-center justify-center mb-4" style="background:var(--success-soft)"><i data-lucide="check-circle" style="color:var(--success)"></i></div>
+      <h3 class="text-lg font-bold mb-1">Aprovar resgate?</h3>
+      <p class="text-sm mb-5" style="color:var(--text-muted)">O valor de <strong class="font-data" style="color:var(--text)">R$ 240,00</strong> será enviado via PIX para Mariana Albuquerque.</p>
+      <div class="flex gap-3 justify-end">
+        <button class="btn btn-ghost btn-sm" onclick="document.getElementById('demoModal').classList.add('hidden')">Cancelar</button>
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('demoModal').classList.add('hidden')">Confirmar PIX</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tema — inicia pela preferência do sistema, sem persistência (in-memory)
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle('dark');
+      const dark = html.classList.contains('dark');
+      document.getElementById('themeLabel').textContent = dark ? 'Claro' : 'Escuro';
+      document.getElementById('themeBtn').querySelector('[data-lucide]').setAttribute('data-lucide', dark ? 'sun' : 'moon');
+      lucide.createIcons();
+    }
+    lucide.createIcons();
+    // ajusta label inicial
+    if (document.documentElement.classList.contains('dark')) {
+      document.getElementById('themeLabel').textContent = 'Claro';
+      document.getElementById('themeBtn').querySelector('[data-lucide]').setAttribute('data-lucide','sun');
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

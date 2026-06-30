@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko Admin · Indicações</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;font-weight:700;padding:.25rem .55rem;border-radius:999px}
+.badge-dot{width:6px;height:6px;border-radius:50%}
+.badge-nova{background:var(--cyan-soft);color:var(--brand-cyan)}.badge-contato{background:var(--warning-soft);color:var(--warning)}.badge-convertida{background:var(--success-soft);color:var(--success)}.badge-paga{background:var(--success);color:#fff}.badge-perdida{background:var(--surface-3);color:var(--text-muted)}.badge-fraud{background:var(--red-soft);color:var(--brand-red)}
+.tbl{width:100%;border-collapse:collapse;font-size:.875rem}
+.tbl thead th{text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-subtle);padding:.7rem 1rem;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl tbody td{padding:.8rem 1rem;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl tbody tr:hover{background:var(--surface-2)}
+.chip{padding:.4rem .85rem;border-radius:999px;font-size:.8rem;font-weight:600;border:1px solid var(--border);color:var(--text-muted);white-space:nowrap;cursor:pointer}.chip.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.sel{font-size:.78rem;font-weight:600;padding:.3rem .5rem;border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+</style>
+</head>
+<body>
+<div class="lg:flex">
+  <div id="bd" onclick="closeNav()" class="hidden fixed inset-0 z-40 lg:hidden" style="background:rgba(0,0,0,.4)"></div>
+  <aside id="nav" class="fixed lg:sticky top-0 z-50 lg:z-auto w-64 shrink-0 h-screen p-4 border-r flex flex-col -translate-x-full lg:translate-x-0 transition-transform" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 px-2 py-2 mb-4"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold">Indiko</div><div class="text-[10px]" style="color:var(--text-subtle)">ADMIN · SEAHUB</div></div></div>
+    <nav class="space-y-1 flex-1">
+      <a href="09-admin-visao-geral.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Visão geral</a>
+      <a href="10-admin-indicacoes.html" class="nav-item active"><i data-lucide="git-branch"></i> Indicações</a>
+      <a href="11-admin-resgates.html" class="nav-item"><i data-lucide="banknote"></i> Resgates <span class="ml-auto text-xs font-bold text-white px-1.5 rounded-full font-data" style="background:var(--brand-red)">5</span></a>
+      <a href="12-admin-programas.html" class="nav-item"><i data-lucide="sliders-horizontal"></i> Programas</a>
+      <a href="13-admin-parceiros.html" class="nav-item"><i data-lucide="users"></i> Parceiros</a>
+      <a href="14-admin-webhooks.html" class="nav-item"><i data-lucide="webhook"></i> Webhooks</a>
+    </nav>
+    <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+    <a href="08-login-admin.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+      <div class="flex items-center gap-3"><button onclick="openNav()" class="lg:hidden"><i data-lucide="menu"></i></button><h1 class="text-lg font-bold">Indicações</h1><select style="font-size:.78rem;font-weight:600;padding:.35rem .6rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);margin-left:.5rem"><option>Todos os programas</option><option>Parceria</option><option>IndiQ</option></select></div>
+      <button class="text-sm font-semibold flex items-center gap-2 px-3 py-2 rounded-lg" style="background:var(--surface-2);color:var(--text)"><i data-lucide="download" style="width:16px;height:16px"></i> Exportar</button>
+    </header>
+
+    <main class="px-4 lg:px-8 py-6 space-y-4 max-w-7xl">
+      <!-- filtros -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="relative flex-1 min-w-48"><i data-lucide="search" style="position:absolute;left:.85rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-subtle)"></i><input class="card w-full pl-10 pr-4 py-2.5 text-sm" style="background:var(--surface)" placeholder="Buscar indicado ou parceiro..."></div>
+        <span class="chip active">Todas</span><span class="chip">Nova</span><span class="chip">Em contato</span><span class="chip">Convertida</span><span class="chip">Paga</span><span class="chip">Perdida</span>
+        <span class="chip" style="border-color:var(--brand-red);color:var(--brand-red)"><i data-lucide="flag" style="width:13px;height:13px;display:inline"></i> Suspeitas</span>
+      </div>
+
+      <!-- tabela -->
+      <div class="card overflow-x-auto">
+        <table class="tbl">
+          <thead><tr><th><input type="checkbox" class="accent-[#FF001E]"></th><th>Indicado</th><th>Parceiro</th><th>Produto</th><th>Data</th><th>Status</th><th class="text-right">Comissão</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><input type="checkbox" class="accent-[#FF001E]"></td><td><a href="23-admin-indicacao-detalhe.html" class="font-medium" style="color:inherit">João Petrônio</a><div class="text-xs" style="color:var(--text-subtle)">(84) 9 8812-3344</div></td><td>Mariana A.</td><td>Endereço Fiscal</td><td class="font-data text-xs">12/05/2026</td><td><select class="sel"><option>Paga</option><option>Convertida</option><option>Em contato</option><option>Nova</option><option>Perdida</option></select></td><td class="text-right font-data font-semibold">R$ 89,00</td><td><i data-lucide="more-horizontal" style="width:16px;height:16px;color:var(--text-subtle)"></i></td></tr>
+            <tr><td><input type="checkbox" class="accent-[#FF001E]"></td><td><div class="font-medium">Renata Cavalcante</div><div class="text-xs" style="color:var(--text-subtle)">renata@email.com</div></td><td>Carla Sales</td><td>Sala Privativa</td><td class="font-data text-xs">14/05/2026</td><td><select class="sel"><option>Convertida</option><option>Paga</option><option>Em contato</option></select></td><td class="text-right font-data font-semibold">R$ 150,00</td><td><i data-lucide="more-horizontal" style="width:16px;height:16px;color:var(--text-subtle)"></i></td></tr>
+            <tr style="background:var(--red-soft)"><td><input type="checkbox" class="accent-[#FF001E]"></td><td><div class="font-medium flex items-center gap-1.5">Lucas Reis <span class="badge badge-fraud"><i data-lucide="flag" style="width:11px;height:11px"></i> 3 leads/mesmo IP</span></div><div class="text-xs" style="color:var(--text-subtle)">(84) 9 9000-0001</div></td><td>Rafael Torres</td><td>Seabox</td><td class="font-data text-xs">18/05/2026</td><td><select class="sel"><option>Em contato</option><option>Nova</option><option>Perdida</option></select></td><td class="text-right font-data" style="color:var(--text-subtle)">—</td><td><i data-lucide="more-horizontal" style="width:16px;height:16px;color:var(--text-subtle)"></i></td></tr>
+            <tr><td><input type="checkbox" class="accent-[#FF001E]"></td><td><div class="font-medium">Aline Souza</div><div class="text-xs" style="color:var(--text-subtle)">(84) 9 8123-9911</div></td><td>Mariana A.</td><td>Auditório</td><td class="font-data text-xs">20/05/2026</td><td><select class="sel"><option>Nova</option><option>Em contato</option></select></td><td class="text-right font-data" style="color:var(--text-subtle)">—</td><td><i data-lucide="more-horizontal" style="width:16px;height:16px;color:var(--text-subtle)"></i></td></tr>
+            <tr><td><input type="checkbox" class="accent-[#FF001E]"></td><td><div class="font-medium">Pedro Bezerra</div><div class="text-xs" style="color:var(--text-subtle)">pedro@email.com</div></td><td>Carla Sales</td><td>Endereço Fiscal</td><td class="font-data text-xs">02/05/2026</td><td><select class="sel"><option>Perdida</option><option>Em contato</option></select></td><td class="text-right font-data" style="color:var(--text-subtle)">—</td><td><i data-lucide="more-horizontal" style="width:16px;height:16px;color:var(--text-subtle)"></i></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex items-center justify-between text-sm" style="color:var(--text-muted)"><span>Mostrando 5 de 142</span><div class="flex gap-1"><button class="w-8 h-8 rounded-lg border" style="border-color:var(--border)"><i data-lucide="chevron-left" style="width:16px;height:16px;margin:auto"></i></button><button class="w-8 h-8 rounded-lg text-white font-data" style="background:var(--brand-red)">1</button><button class="w-8 h-8 rounded-lg border font-data" style="border-color:var(--border)">2</button><button class="w-8 h-8 rounded-lg border" style="border-color:var(--border)"><i data-lucide="chevron-right" style="width:16px;height:16px;margin:auto"></i></button></div></div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function openNav(){document.getElementById('nav').classList.remove('-translate-x-full');document.getElementById('bd').classList.remove('hidden')}
+function closeNav(){document.getElementById('nav').classList.add('-translate-x-full');document.getElementById('bd').classList.add('hidden')}
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko Admin · Construtor de campanha</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.8125rem;border-radius:var(--r-md);padding:.6rem .95rem;cursor:pointer;border:1px solid transparent}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn-secondary{background:transparent;color:var(--brand-cyan);border-color:var(--brand-cyan)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.6rem .85rem;font-size:.875rem;font-family:var(--font-ui)}
+.input:focus{outline:none;border-color:var(--brand-red);box-shadow:0 0 0 3px var(--red-soft)}
+.swatch-pick{width:44px;height:40px;border:1px solid var(--border);border-radius:8px;padding:0;background:none;cursor:pointer}.swatch-pick::-webkit-color-swatch-wrapper{padding:3px}.swatch-pick::-webkit-color-swatch{border:none;border-radius:6px}
+.opt{border:1px solid var(--border);border-radius:12px;padding:.85rem;cursor:pointer;transition:.15s}.opt:hover{border-color:var(--text-subtle)}.opt.sel{border-color:var(--brand-red);background:var(--red-soft)}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--brand-red);color:#fff;font-family:var(--font-data);font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:999px}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.tbl{width:100%;border-collapse:collapse;font-size:.85rem}.tbl td{padding:.5rem .25rem;border-bottom:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="lg:flex">
+  <div id="bd" onclick="closeNav()" class="hidden fixed inset-0 z-40 lg:hidden" style="background:rgba(0,0,0,.4)"></div>
+  <aside id="nav" class="fixed lg:sticky top-0 z-50 lg:z-auto w-64 shrink-0 h-screen p-4 border-r flex flex-col -translate-x-full lg:translate-x-0 transition-transform" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 px-2 py-2 mb-1"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold">Indiko</div><div class="text-[10px]" style="color:var(--text-subtle)">SEAHUB · ADMIN</div></div></div>
+    <nav class="space-y-1 flex-1 mt-3">
+      <a href="09-admin-visao-geral.html" class="nav-item"><i data-lucide="layout-dashboard"></i> Visão geral</a>
+      <a href="10-admin-indicacoes.html" class="nav-item"><i data-lucide="git-branch"></i> Indicações</a>
+      <a href="11-admin-resgates.html" class="nav-item"><i data-lucide="banknote"></i> Resgates</a>
+      <a href="12-admin-programas.html" class="nav-item"><i data-lucide="sliders-horizontal"></i> Programas</a>
+      <a href="13-admin-parceiros.html" class="nav-item"><i data-lucide="users"></i> Parceiros</a>
+      <a href="31-admin-campanhas.html" class="nav-item active"><i data-lucide="megaphone"></i> Campanhas</a>
+      <a href="14-admin-webhooks.html" class="nav-item"><i data-lucide="webhook"></i> Webhooks</a>
+    </nav>
+    <a href="26-admin-configuracoes.html" class="nav-item"><i data-lucide="settings"></i> Configurações</a>
+    <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+    <a href="08-login-admin.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+      <div class="flex items-center gap-3"><button onclick="openNav()" class="lg:hidden"><i data-lucide="menu"></i></button><a href="31-admin-campanhas.html"><i data-lucide="arrow-left"></i></a><h1 class="text-lg font-bold">Nova campanha</h1></div>
+      <button class="btn btn-primary"><i data-lucide="rocket" style="width:15px;height:15px"></i> Publicar campanha</button>
+    </header>
+
+    <main class="px-4 lg:px-8 py-6 max-w-5xl grid lg:grid-cols-3 gap-5 items-start">
+      <!-- construtor -->
+      <div class="lg:col-span-2 space-y-5">
+        <!-- 1 identidade -->
+        <div class="card p-5 space-y-4">
+          <div class="flex items-center gap-2.5"><span class="step-num">1</span><h3 class="font-bold">Identidade da campanha</h3></div>
+          <div><label class="field-label">Nome da campanha</label><input class="input" value="Indique e Ganhe · Julho"></div>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div><label class="field-label">Programa</label><select class="input" onchange="setPrograma(this)"><option value="IndiQ">IndiQ (Seahubers)</option><option value="Parceria">Parceria (Contadores)</option></select></div>
+            <div><label class="field-label">Início</label><input class="input font-data" value="01/07/2026"></div>
+            <div><label class="field-label">Fim</label><input class="input font-data" value="31/07/2026"></div>
+          </div>
+          <p class="text-xs" style="color:var(--text-subtle)">Os níveis e regras vêm do programa selecionado. Edite-os em Configurações → Personalização.</p>
+        </div>
+
+        <!-- 2 público -->
+        <div class="card p-5 space-y-4">
+          <div class="flex items-center gap-2.5"><span class="step-num">2</span><h3 class="font-bold">Quem pode participar</h3></div>
+          <div class="grid sm:grid-cols-3 gap-3">
+            <div class="opt sel" onclick="pick(this)"><i data-lucide="users" style="width:18px;height:18px;color:var(--brand-red)"></i><p class="font-semibold text-sm mt-1.5">Clientes ativos</p><p class="text-xs" style="color:var(--text-subtle)">Seahubers atuais</p></div>
+            <div class="opt" onclick="pick(this)"><i data-lucide="handshake" style="width:18px;height:18px"></i><p class="font-semibold text-sm mt-1.5">Parceiros externos</p><p class="text-xs" style="color:var(--text-subtle)">Contadores, afiliados</p></div>
+            <div class="opt" onclick="pick(this)"><i data-lucide="globe" style="width:18px;height:18px"></i><p class="font-semibold text-sm mt-1.5">Aberto ao público</p><p class="text-xs" style="color:var(--text-subtle)">Qualquer pessoa</p></div>
+          </div>
+        </div>
+
+        <!-- 3 formato -->
+        <div class="card p-5 space-y-4">
+          <div class="flex items-center gap-2.5"><span class="step-num">3</span><h3 class="font-bold">Formato da campanha</h3></div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div class="opt sel" onclick="pick(this)"><div class="flex items-center gap-2"><i data-lucide="gift" style="width:18px;height:18px;color:var(--brand-red)"></i><p class="font-semibold text-sm">Indique e ganhe</p></div><p class="text-xs mt-1" style="color:var(--text-subtle)">Recompensa por conversão</p></div>
+            <div class="opt" onclick="pick(this)"><div class="flex items-center gap-2"><i data-lucide="trophy" style="width:18px;height:18px"></i><p class="font-semibold text-sm">MGM com níveis</p></div><p class="text-xs mt-1" style="color:var(--text-subtle)">Recompensa cresce por nível</p></div>
+            <div class="opt" onclick="pick(this)"><div class="flex items-center gap-2"><i data-lucide="repeat" style="width:18px;height:18px"></i><p class="font-semibold text-sm">Comissão recorrente</p></div><p class="text-xs mt-1" style="color:var(--text-subtle)">% da mensalidade do indicado</p></div>
+            <div class="opt" onclick="pick(this)"><div class="flex items-center gap-2"><i data-lucide="percent" style="width:18px;height:18px"></i><p class="font-semibold text-sm">Cashback / desconto</p></div><p class="text-xs mt-1" style="color:var(--text-subtle)">Crédito pro indicador</p></div>
+          </div>
+        </div>
+
+        <!-- 4 recompensas por nível -->
+        <div class="card p-5 space-y-4">
+          <div class="flex items-center gap-2.5"><span class="step-num">4</span><h3 class="font-bold">Recompensas por nível</h3></div>
+          <div><label class="field-label">Tipo de recompensa</label><select class="input"><option>PIX</option><option>Crédito na mensalidade</option><option>Desconto na renovação</option><option>Valor fixo</option><option>% recorrente</option></select></div>
+          <table class="tbl">
+            <tbody>
+              <tr><td class="font-semibold nivel-nome" style="width:40%">Tripulante</td><td><input class="input font-data" value="R$ 50" style="padding:.4rem .6rem"></td></tr>
+              <tr><td class="font-semibold nivel-nome">Navegador</td><td><input class="input font-data" value="R$ 75" style="padding:.4rem .6rem"></td></tr>
+              <tr><td class="font-semibold nivel-nome">Comandante</td><td><input class="input font-data" value="R$ 120" style="padding:.4rem .6rem"></td></tr>
+            </tbody>
+          </table>
+          <p class="text-xs" style="color:var(--text-subtle)">Nomes dos níveis puxados do programa. Troque o programa acima para ver mudar.</p>
+        </div>
+
+        <!-- 5 landing -->
+        <div class="card p-5 space-y-4">
+          <div class="flex items-center gap-2.5"><span class="step-num">5</span><h3 class="font-bold">Página da campanha</h3></div>
+          <div><label class="field-label">Título (headline)</label><input class="input" value="Indique o Seahub e ganhe em julho"></div>
+          <div><label class="field-label">Subtítulo</label><input class="input" value="Traga quem precisa de espaço pra trabalhar e ganhe recompensa por cada conversão."></div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            <div><label class="field-label">Oferta exibida ao lead</label><input class="input" value="10% OFF na 1ª mensalidade"></div>
+            <div><label class="field-label">Cor de destaque</label><div class="flex items-center gap-2"><input type="color" class="swatch-pick" value="#FF001E" oninput="document.getElementById('ch').value=this.value.toUpperCase()"><input id="ch" class="input font-data" value="#FF001E"></div></div>
+          </div>
+          <div><label class="field-label">Imagem de capa</label><button class="btn btn-ghost w-full"><i data-lucide="image-plus" style="width:15px;height:15px"></i> Enviar imagem</button></div>
+        </div>
+      </div>
+
+      <!-- painel: landing gerada -->
+      <div class="lg:sticky lg:top-20 space-y-4">
+        <div class="card p-5" style="border-color:var(--brand-cyan)">
+          <div class="flex items-center gap-2 mb-1"><i data-lucide="sparkles" style="width:16px;height:16px;color:var(--brand-cyan)"></i><h3 class="font-bold">Landing gerada</h3></div>
+          <p class="text-sm mb-3" style="color:var(--text-muted)">Toda campanha vira uma página pública que explica tudo e captura quem quer participar.</p>
+          <div class="flex items-center gap-2 p-2.5 rounded-lg mb-3" style="background:var(--surface-2)">
+            <i data-lucide="link" style="width:14px;height:14px;color:var(--text-subtle)"></i>
+            <span class="font-data text-xs flex-1 truncate">indiko.app/seahub/c/julho</span>
+            <button class="btn btn-secondary" style="padding:.3rem .6rem;font-size:.72rem"><i data-lucide="copy" style="width:12px;height:12px"></i></button>
+          </div>
+          <a href="36-campanha-landing.html" class="btn btn-primary w-full"><i data-lucide="external-link" style="width:15px;height:15px"></i> Ver landing</a>
+        </div>
+        <div class="card p-4">
+          <p class="text-xs font-bold uppercase tracking-wider mb-2" style="color:var(--text-subtle)">Resumo</p>
+          <div class="space-y-1.5 text-sm">
+            <div class="flex justify-between"><span style="color:var(--text-muted)">Programa</span><span class="font-medium">IndiQ</span></div>
+            <div class="flex justify-between"><span style="color:var(--text-muted)">Público</span><span class="font-medium">Clientes ativos</span></div>
+            <div class="flex justify-between"><span style="color:var(--text-muted)">Formato</span><span class="font-medium">Indique e ganhe</span></div>
+            <div class="flex justify-between"><span style="color:var(--text-muted)">Período</span><span class="font-medium font-data">01–31/07</span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function openNav(){document.getElementById('nav').classList.remove('-translate-x-full');document.getElementById('bd').classList.remove('hidden')}
+function closeNav(){document.getElementById('nav').classList.add('-translate-x-full');document.getElementById('bd').classList.add('hidden')}
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+function pick(el){[...el.parentElement.children].forEach(c=>c.classList.remove('sel'));el.classList.add('sel')}
+const niveis={'IndiQ':['Tripulante','Navegador','Comandante'],'Parceria':['Marinheiro','Capitão','Almirante']};
+function setPrograma(sel){const arr=niveis[sel.value]||[];document.querySelectorAll('.nivel-nome').forEach((n,i)=>{if(arr[i])n.textContent=arr[i]})}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

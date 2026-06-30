@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Página não encontrada</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-md:12px}
+:root,.light{--bg:#FFFFFF;--surface-2:#F2F2F1;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--surface-2:#232222;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg);color:var(--text);transition:.25s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.9rem;border-radius:var(--r-md);padding:.8rem 1.5rem;cursor:pointer;border:1px solid transparent;text-decoration:none}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+  <p class="font-data font-extrabold tracking-tight leading-none mb-4" style="font-size:6rem;color:var(--brand-red)">404</p>
+  <h1 class="text-2xl font-bold mb-2">Essa página se perdeu no mar</h1>
+  <p class="max-w-sm mb-7" style="color:var(--text-muted)">O link pode estar quebrado ou a página foi movida. Vamos te levar de volta a um lugar seguro.</p>
+  <div class="flex flex-col sm:flex-row gap-3">
+    <a href="02-dashboard-parceiro.html" class="btn btn-primary"><i data-lucide="home"></i> Ir para o início</a>
+    <a href="17-biblioteca-publica.html" class="btn btn-ghost"><i data-lucide="life-buoy"></i> Central de ajuda</a>
+  </div>
+  <div class="flex items-center gap-2.5 mt-12 opacity-60"><div class="w-7 h-7 rounded-lg flex items-center justify-center font-extrabold text-white text-sm" style="background:var(--brand-red)">in</div><span class="font-bold text-sm">Indiko</span></div>
+<script>(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();lucide.createIcons();</script>
+</body>
+</html>

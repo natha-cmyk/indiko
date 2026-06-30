@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Início</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06),0 1px 3px rgba(18,17,17,.04);--shadow-md:0 4px 16px rgba(18,17,17,.08);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data);font-feature-settings:"tnum" 1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.875rem;border-radius:var(--r-md);padding:.75rem 1.25rem;cursor:pointer;transition:.15s;border:1px solid transparent}
+.btn-sm{padding:.5rem .875rem;font-size:.8125rem;border-radius:var(--r-sm)}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-primary:hover{background:var(--red-hover)}
+.btn-secondary{background:transparent;color:var(--brand-cyan);border-color:var(--brand-cyan)}.btn-secondary:hover{background:var(--cyan-soft)}
+.btn-ghost{background:transparent;color:var(--text)}.btn-ghost:hover{background:var(--surface-2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm)}
+.badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;font-weight:700;padding:.25rem .55rem;border-radius:999px}
+.badge-dot{width:6px;height:6px;border-radius:50%}
+.badge-nova{background:var(--cyan-soft);color:var(--brand-cyan)}.badge-contato{background:var(--warning-soft);color:var(--warning)}.badge-convertida{background:var(--success-soft);color:var(--success)}.badge-paga{background:var(--success);color:#fff}.badge-perdida{background:var(--surface-3);color:var(--text-muted)}
+.nav-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .85rem;border-radius:var(--r-md);font-size:.9rem;font-weight:500;color:var(--text-muted);transition:.15s}
+.nav-item:hover{background:var(--surface-2);color:var(--text)}.nav-item.active{background:var(--red-soft);color:var(--brand-red);font-weight:600}.nav-item.active .lucide{color:var(--brand-red)}.nav-item .lucide{width:18px;height:18px}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.5rem 0;color:var(--text-subtle);font-size:10px;font-weight:500}.tab.active{color:var(--brand-red);font-weight:600}.tab .lucide{width:20px;height:20px}
+</style>
+</head>
+<body class="lg:flex">
+
+<!-- SIDEBAR DESKTOP -->
+<aside class="hidden lg:flex flex-col w-60 shrink-0 border-r sticky top-0 h-screen p-4" style="background:var(--bg);border-color:var(--border)">
+  <div class="flex items-center gap-2.5 px-2 py-2 mb-4">
+    <div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div>
+    <span class="font-extrabold text-lg">Indiko</span>
+  </div>
+  <nav class="space-y-1 flex-1">
+    <a href="02-dashboard-parceiro.html" class="nav-item active"><i data-lucide="home"></i> Início</a>
+    <a href="03-indicar.html" class="nav-item"><i data-lucide="plus-circle"></i> Indicar</a>
+    <a href="04-minhas-indicacoes.html" class="nav-item"><i data-lucide="list"></i> Minhas indicações</a>
+    <a href="05-carteira.html" class="nav-item"><i data-lucide="wallet"></i> Carteira</a>
+    <a href="06-resgate.html" class="nav-item"><i data-lucide="banknote"></i> Resgate</a>
+    <a href="07-perfil-materiais.html" class="nav-item"><i data-lucide="folder"></i> Materiais & perfil</a>
+  </nav>
+  <button onclick="toggleTheme()" class="nav-item w-full"><i data-lucide="moon" id="tIcon"></i> <span id="themeLabel">Modo escuro</span></button>
+  <a href="01-login-parceiro.html" class="nav-item"><i data-lucide="log-out"></i> Sair</a>
+</aside>
+
+<!-- COLUNA PRINCIPAL -->
+<div class="flex-1 min-w-0 flex flex-col min-h-screen">
+  <!-- top bar -->
+  <header class="sticky top-0 z-30 border-b px-4 lg:px-8 h-16 flex items-center justify-between" style="background:var(--bg);border-color:var(--border)">
+    <div class="flex items-center gap-2.5 lg:hidden">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center font-extrabold text-white text-sm" style="background:var(--brand-red)">in</div>
+      <span class="font-extrabold">Indiko</span>
+    </div>
+    <h1 class="hidden lg:block text-lg font-bold">Início</h1>
+    <div class="flex items-center gap-3">
+      <a href="18-notificacoes.html" class="relative w-9 h-9 rounded-lg flex items-center justify-center" style="background:var(--surface-2)"><i data-lucide="bell" style="width:18px;height:18px"></i><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style="background:var(--brand-red)"></span></a>
+      <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-white text-sm" style="background:var(--brand-cyan)">MA</div>
+    </div>
+  </header>
+
+  <main class="flex-1 px-4 lg:px-8 py-6 pb-28 lg:pb-8 max-w-4xl w-full mx-auto space-y-6">
+
+    <!-- saudação -->
+    <div>
+      <p class="text-sm" style="color:var(--text-muted)">Olá, Mariana 👋</p>
+      <h2 class="text-2xl font-extrabold tracking-tight">Você está indo muito bem este mês</h2>
+    </div>
+
+    <!-- card saldo destaque -->
+    <div class="card p-6 relative overflow-hidden" style="background:var(--brand-red);border-color:var(--brand-red)">
+      <div class="absolute -right-12 -top-12 w-44 h-44 rounded-full" style="background:rgba(255,255,255,.1)"></div>
+      <div class="relative flex items-start justify-between">
+        <div>
+          <p class="text-white/80 text-sm">Saldo disponível</p>
+          <p class="text-4xl font-extrabold text-white font-data mt-1">R$ 1.240,00</p>
+          <p class="text-white/80 text-xs mt-2">+ R$ 380,00 a liberar</p>
+        </div>
+        <i data-lucide="wallet" class="text-white/90"></i>
+      </div>
+      <a href="06-resgate.html" class="relative btn mt-5 bg-white" style="color:var(--brand-red)"><i data-lucide="arrow-down-to-line"></i> Resgatar via PIX</a>
+    </div>
+
+    <!-- mini stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Indicações ativas</p><p class="text-2xl font-bold font-data mt-1">7</p></div>
+      <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Convertidas no mês</p><p class="text-2xl font-bold font-data mt-1">4</p></div>
+      <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Taxa de conversão</p><p class="text-2xl font-bold font-data mt-1" style="color:var(--success)">57%</p></div>
+      <div class="card p-4"><p class="text-xs" style="color:var(--text-muted)">Posição no ranking</p><p class="text-2xl font-bold font-data mt-1">#3</p></div>
+    </div>
+
+    <!-- CTA indicar -->
+    <a href="03-indicar.html" class="card p-5 flex items-center gap-4 hover:shadow-md transition" style="border-style:dashed;border-color:var(--brand-red)">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style="background:var(--red-soft)"><i data-lucide="plus" style="color:var(--brand-red)"></i></div>
+      <div class="flex-1"><p class="font-bold">Indicar agora</p><p class="text-sm" style="color:var(--text-muted)">Envie seu link e acompanhe a conversão</p></div>
+      <i data-lucide="chevron-right" style="color:var(--text-subtle)"></i>
+    </a>
+
+    <div class="grid lg:grid-cols-2 gap-6">
+      <!-- próximas comissões -->
+      <div>
+        <div class="flex items-center justify-between mb-3"><h3 class="font-bold">Próximas comissões</h3><a href="05-carteira.html" class="text-xs font-semibold" style="color:var(--brand-cyan)">Ver carteira</a></div>
+        <div class="card divide-y" style="--tw-divide-opacity:1">
+          <div class="p-4 flex items-center justify-between" style="border-bottom:1px solid var(--border)"><div><p class="text-sm font-medium">João Petrônio</p><p class="text-xs" style="color:var(--text-subtle)">Endereço Fiscal · libera 28/05</p></div><span class="font-data font-semibold">R$ 89,00</span></div>
+          <div class="p-4 flex items-center justify-between" style="border-bottom:1px solid var(--border)"><div><p class="text-sm font-medium">Renata Cavalcante</p><p class="text-xs" style="color:var(--text-subtle)">Sala Privativa · libera 02/06</p></div><span class="font-data font-semibold">R$ 150,00</span></div>
+          <div class="p-4 flex items-center justify-between"><div><p class="text-sm font-medium">Lucas Andrade</p><p class="text-xs" style="color:var(--text-subtle)">Seabox · libera 05/06</p></div><span class="font-data font-semibold">R$ 12,00</span></div>
+        </div>
+      </div>
+      <!-- ranking -->
+      <div>
+        <div class="flex items-center justify-between mb-3"><h3 class="font-bold">Ranking do mês</h3><a href="16-leaderboard.html" class="text-xs font-semibold" style="color:var(--brand-cyan)">Ver tudo</a></div>
+        <div class="card p-2">
+          <div class="flex items-center gap-3 p-3 rounded-lg"><span class="font-data font-bold w-5 text-center" style="color:var(--warning)">1</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">CS</div><span class="text-sm flex-1">Carla Sales</span><span class="text-xs font-data" style="color:var(--text-muted)">18 conv.</span></div>
+          <div class="flex items-center gap-3 p-3 rounded-lg"><span class="font-data font-bold w-5 text-center" style="color:var(--text-subtle)">2</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-cyan)">RT</div><span class="text-sm flex-1">Rafael Torres</span><span class="text-xs font-data" style="color:var(--text-muted)">15 conv.</span></div>
+          <div class="flex items-center gap-3 p-3 rounded-lg" style="background:var(--red-soft)"><span class="font-data font-bold w-5 text-center" style="color:var(--brand-red)">3</span><div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--brand-red)">MA</div><span class="text-sm flex-1 font-semibold">Você</span><span class="text-xs font-data font-semibold" style="color:var(--brand-red)">12 conv.</span></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- TAB BAR MOBILE -->
+<nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t flex items-center px-2" style="background:var(--bg);border-color:var(--border);padding-bottom:env(safe-area-inset-bottom)">
+  <a href="02-dashboard-parceiro.html" class="tab active"><i data-lucide="home"></i>Início</a>
+  <a href="04-minhas-indicacoes.html" class="tab"><i data-lucide="list"></i>Indicações</a>
+  <a href="03-indicar.html" class="tab -mt-5"><span class="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg" style="background:var(--brand-red)"><i data-lucide="plus" style="width:24px;height:24px"></i></span></a>
+  <a href="05-carteira.html" class="tab"><i data-lucide="wallet"></i>Carteira</a>
+  <a href="07-perfil-materiais.html" class="tab"><i data-lucide="user"></i>Perfil</a>
+</nav>
+
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Modo claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>

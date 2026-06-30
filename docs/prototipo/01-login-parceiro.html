@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Entrar</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--brand-black:#121111;--brand-gray:#EDEDEC;--red-soft:#FF001E14;--red-hover:#E00019;--cyan-soft:#00BBC514;--success:#16A34A;--success-soft:#16A34A1A;--warning:#F59E0B;--warning-soft:#F59E0B1F;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--shadow-sm:0 1px 2px rgba(18,17,17,.06),0 1px 3px rgba(18,17,17,.04);--shadow-md:0 4px 16px rgba(18,17,17,.08);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--red-soft:#FF001E26;--cyan-soft:#00BBC526;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.9rem;border-radius:var(--r-md);padding:.8rem 1.25rem;cursor:pointer;transition:.15s;border:1px solid transparent;width:100%}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-primary:hover{background:var(--red-hover)}
+.btn-social{background:var(--surface);color:var(--text);border-color:var(--border)}.btn-social:hover{background:var(--surface-2)}
+.field-label{display:block;font-size:.8125rem;font-weight:600;margin-bottom:.4rem}
+.input{width:100%;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-md);padding:.75rem .9rem;font-size:.9rem;font-family:var(--font-ui);transition:.15s}
+.input::placeholder{color:var(--text-subtle)}.input:focus{outline:none;border-color:var(--brand-red);box-shadow:0 0 0 3px var(--red-soft)}
+.input-icon-wrap{position:relative}.input-icon-wrap .lucide{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--text-subtle)}.input-icon-wrap .input{padding-left:2.6rem}
+.tab-auth{flex:1;text-align:center;padding:.6rem;font-size:.875rem;font-weight:600;cursor:pointer;border-radius:var(--r-sm);color:var(--text-muted)}
+.tab-auth.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm)}
+</style>
+</head>
+<body class="min-h-screen lg:grid lg:grid-cols-2">
+
+<!-- Painel de marca (desktop) -->
+<div class="hidden lg:flex flex-col justify-between p-12 relative overflow-hidden" style="background:var(--brand-red);color:#fff">
+  <div class="absolute -right-24 -top-24 w-96 h-96 rounded-full" style="background:rgba(255,255,255,.08)"></div>
+  <div class="absolute -left-20 bottom-10 w-72 h-72 rounded-full" style="background:rgba(0,0,0,.06)"></div>
+  <div class="relative flex items-center gap-3">
+    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center font-extrabold" style="color:var(--brand-red)">in</div>
+    <span class="font-extrabold text-xl">Indiko</span>
+  </div>
+  <div class="relative">
+    <h1 class="text-4xl font-extrabold leading-tight mb-4">Indique o Seahub.<br>Ganhe de verdade.</h1>
+    <p class="text-white/85 max-w-sm">O programa de parceiros do melhor lugar para trabalhar de Natal. Cada cliente que você traz vira recompensa em PIX.</p>
+    <div class="flex gap-6 mt-8">
+      <div><p class="text-3xl font-extrabold font-data">1.000+</p><p class="text-sm text-white/75">Seahubers</p></div>
+      <div><p class="text-3xl font-extrabold font-data">R$ 89</p><p class="text-sm text-white/75">por indicação paga</p></div>
+    </div>
+  </div>
+  <p class="relative text-sm text-white/60">Seahub Coworking · Natal/RN</p>
+</div>
+
+<!-- Formulário -->
+<div class="flex flex-col items-center justify-center p-6 min-h-screen lg:min-h-0">
+  <div class="w-full max-w-sm">
+    <div class="lg:hidden flex items-center justify-center gap-2 mb-8">
+      <div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div>
+      <span class="font-extrabold text-lg">Indiko</span>
+    </div>
+
+    <h2 class="text-2xl font-bold mb-1">Bem-vindo de volta</h2>
+    <p class="text-sm mb-6" style="color:var(--text-muted)">Acesse sua conta de parceiro indicador.</p>
+
+    <!-- tabs entrar/cadastrar -->
+    <div class="flex gap-1 p-1 rounded-xl mb-6" style="background:var(--surface-2)">
+      <div class="tab-auth active">Entrar</div>
+      <div class="tab-auth">Criar conta</div>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="field-label">E-mail</label>
+        <div class="input-icon-wrap"><i data-lucide="mail"></i><input class="input" placeholder="voce@email.com" value="mariana@email.com"></div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between mb-1.5"><label class="field-label mb-0">Senha</label><a href="20-recuperar-senha.html" class="text-xs font-semibold" style="color:var(--brand-cyan)">Esqueci a senha</a></div>
+        <div class="input-icon-wrap"><i data-lucide="lock"></i><input type="password" class="input" placeholder="••••••••" value="senha123"></div>
+      </div>
+      <a href="02-dashboard-parceiro.html" class="btn btn-primary"><i data-lucide="log-in"></i> Entrar</a>
+    </div>
+
+    <div class="flex items-center gap-3 my-6"><div class="flex-1 h-px" style="background:var(--border)"></div><span class="text-xs" style="color:var(--text-subtle)">ou continue com</span><div class="flex-1 h-px" style="background:var(--border)"></div></div>
+
+    <div class="space-y-3">
+      <a href="02-dashboard-parceiro.html" class="btn btn-social">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1Z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23Z"/><path fill="#FBBC05" d="M5.84 14.1a6.6 6.6 0 0 1 0-4.2V7.06H2.18a11 11 0 0 0 0 9.88l3.66-2.84Z"/><path fill="#EA4335" d="M12 4.75c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.46 14.97.5 12 .5A11 11 0 0 0 2.18 7.06l3.66 2.84C6.71 6.7 9.14 4.75 12 4.75Z"/></svg>
+        Entrar com Google
+      </a>
+    </div>
+
+    <p class="text-center text-sm mt-8" style="color:var(--text-muted)">Ainda não é parceiro? <a href="19-cadastro-parceiro.html" class="font-semibold" style="color:var(--brand-red)">Criar conta grátis</a></p>
+
+    <div class="flex justify-center mt-8">
+      <button onclick="toggleTheme()" class="text-xs flex items-center gap-1.5" style="color:var(--text-subtle)"><i data-lucide="moon" style="width:14px;height:14px"></i><span id="themeLabel">Modo escuro</span></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Modo claro':'Modo escuro';}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark'))document.getElementById('themeLabel').textContent='Modo claro';
+</script>
+</body>
+</html>

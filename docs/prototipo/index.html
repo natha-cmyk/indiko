@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indiko · Protótipo navegável</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config={darkMode:'class'}</script>
+<style>
+:root{--brand-red:#FF001E;--brand-cyan:#00BBC5;--red-soft:#FF001E14;--red-hover:#E00019;--success:#16A34A;--warning:#F59E0B;--font-ui:'Montserrat',system-ui,sans-serif;--font-data:'Inter',var(--font-ui);--r-md:12px;--r-lg:16px;--shadow-sm:0 1px 2px rgba(18,17,17,.06);--shadow-lg:0 12px 40px rgba(18,17,17,.14)}
+:root,.light{--bg:#FFFFFF;--bg-subtle:#F7F7F6;--surface:#FFFFFF;--surface-2:#F2F2F1;--surface-3:#EDEDEC;--border:#E6E6E4;--text:#121111;--text-muted:#6B6B6B;--text-subtle:#9A9A98}
+.dark{--bg:#0E0D0D;--bg-subtle:#161515;--surface:#1A1919;--surface-2:#232222;--surface-3:#2C2A2A;--border:#2E2C2C;--text:#EDEDEC;--text-muted:#9A9A98;--text-subtle:#6B6B6B;--shadow-lg:0 12px 40px rgba(0,0,0,.6)}
+*{-webkit-font-smoothing:antialiased}body{font-family:var(--font-ui);background:var(--bg-subtle);color:var(--text);transition:.25s}
+.font-data{font-family:var(--font-data)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-weight:600;font-size:.9rem;border-radius:var(--r-md);padding:.8rem 1.3rem;cursor:pointer;transition:.15s;border:1px solid transparent;text-decoration:none}
+.btn-primary{background:var(--brand-red);color:#fff}.btn-primary:hover{background:var(--red-hover);transform:translateY(-1px)}
+.btn-outline{background:var(--surface);color:var(--text);border-color:var(--border)}.btn-outline:hover{background:var(--surface-2)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden;transition:.2s}
+.card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.thumb{position:relative;height:240px;overflow:hidden;background:var(--surface-2);border-bottom:1px solid var(--border)}
+.thumb iframe{width:300%;height:720px;border:0;transform:scale(.333);transform-origin:top left;pointer-events:none}
+.thumb.desk iframe{width:340%;height:820px;transform:scale(.294)}
+.thumb-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:1rem;opacity:0;transition:.2s;background:linear-gradient(to top,rgba(18,17,17,.55),transparent 55%)}
+.card:hover .thumb-overlay{opacity:1}
+.num{font-family:var(--font-data);font-weight:700;font-size:.7rem;padding:.15rem .45rem;border-radius:6px;background:var(--surface-3);color:var(--text-muted)}
+.pin{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:999px;text-transform:uppercase;letter-spacing:.03em}
+.sec-line{height:1px;flex:1;background:var(--border)}
+</style>
+</head>
+<body>
+<header class="sticky top-0 z-40 border-b" style="background:var(--bg);border-color:var(--border)">
+  <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl flex items-center justify-center font-extrabold text-white" style="background:var(--brand-red)">in</div><div class="leading-tight"><div class="font-extrabold">Indiko</div><div class="text-xs" style="color:var(--text-subtle)">Protótipo navegável · MVP multi-tenant</div></div></div>
+    <button onclick="toggleTheme()" class="btn btn-outline" style="padding:.5rem .9rem;font-size:.8rem"><i data-lucide="moon" id="tIcon" style="width:16px;height:16px"></i><span id="themeLabel">Escuro</span></button>
+  </div>
+</header>
+
+<section class="max-w-6xl mx-auto px-5 pt-12 pb-8">
+  <span class="pin mb-4" style="background:var(--red-soft);color:var(--brand-red)"><i data-lucide="layout-grid" style="width:13px;height:13px"></i> 37 telas · alta fidelidade</span>
+  <h1 class="text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.05] mt-4 mb-4">Indiko — plataforma de indicação multi-empresa</h1>
+  <p class="text-lg max-w-2xl mb-7" style="color:var(--text-muted)">App do parceiro, painel da empresa (Admin/Operação) e camada de plataforma (Super Admin). Identidade Seahub como 1º cliente, modo claro/escuro. Clique para abrir.</p>
+  <div class="flex flex-wrap gap-3">
+    <a href="01-login-parceiro.html" class="btn btn-primary"><i data-lucide="smartphone" style="width:18px;height:18px"></i> Entrar como Parceiro</a>
+    <a href="08-login-admin.html" class="btn btn-outline"><i data-lucide="shield" style="width:18px;height:18px"></i> Painel da empresa</a>
+    <a href="33-plataforma-organizacoes.html" class="btn btn-outline"><i data-lucide="layers" style="width:18px;height:18px"></i> Camada de Plataforma</a>
+    <a href="15-landing-cobranded.html" class="btn btn-outline"><i data-lucide="globe" style="width:18px;height:18px"></i> Landing do Lead</a>
+  </div>
+</section>
+
+<main class="max-w-6xl mx-auto px-5 pb-20 space-y-14" id="grid"></main>
+<footer class="border-t py-8 text-center text-sm" style="border-color:var(--border);color:var(--text-subtle)">Indiko · Seahub Coworking — Natal/RN</footer>
+
+<script>
+const screens = [
+  {g:'Fundação', icon:'palette', items:[
+    {n:'00', f:'00-design-system.html', t:'Design System', d:'Cores, tipografia e componentes', desk:true},
+  ]},
+  {g:'App do Parceiro', icon:'smartphone', items:[
+    {n:'01', f:'01-login-parceiro.html', t:'Login / Cadastro', d:'E-mail, senha e login social', desk:true},
+    {n:'19', f:'19-cadastro-parceiro.html', t:'Cadastro completo', d:'Onboarding pós-convite + chave PIX', desk:true},
+    {n:'20', f:'20-recuperar-senha.html', t:'Recuperar senha', d:'Pedir link e redefinir', desk:true},
+    {n:'02', f:'02-dashboard-parceiro.html', t:'Dashboard', d:'Saldo, stats, ranking, comissões'},
+    {n:'03', f:'03-indicar.html', t:'Indicar', d:'Link, cupom, WhatsApp e form'},
+    {n:'04', f:'04-minhas-indicacoes.html', t:'Minhas indicações', d:'Lista com filtros por status'},
+    {n:'22', f:'22-indicacao-detalhe.html', t:'Detalhe da indicação', d:'Timeline + dados do lead'},
+    {n:'05', f:'05-carteira.html', t:'Carteira', d:'Saldo, a liberar e extrato'},
+    {n:'06', f:'06-resgate.html', t:'Resgate via PIX', d:'Valor, chave e histórico'},
+    {n:'07', f:'07-perfil-materiais.html', t:'Materiais & perfil', d:'Textos, banners e nível'},
+    {n:'21', f:'21-editar-dados.html', t:'Editar meus dados', d:'Perfil, chave PIX, senha'},
+    {n:'18', f:'18-notificacoes.html', t:'Notificações', d:'Comissões, indicações, resgates'},
+  ]},
+  {g:'Painel da Empresa (Admin / Operação)', icon:'shield', items:[
+    {n:'08', f:'08-login-admin.html', t:'Login (2FA)', d:'Credenciais + código', desk:true},
+    {n:'09', f:'09-admin-visao-geral.html', t:'Visão geral', d:'KPIs, gráficos e funil', desk:true},
+    {n:'10', f:'10-admin-indicacoes.html', t:'Indicações', d:'Tabela, status, anti-fraude', desk:true},
+    {n:'23', f:'23-admin-indicacao-detalhe.html', t:'Detalhe da indicação', d:'Timeline, lead, ações', desk:true},
+    {n:'11', f:'11-admin-resgates.html', t:'Resgates', d:'Fila aprovar/rejeitar em lote', desk:true},
+    {n:'12', f:'12-admin-programas.html', t:'Programas', d:'Comissão, atribuição, liberação', desk:true},
+    {n:'13', f:'13-admin-parceiros.html', t:'Parceiros', d:'Níveis, performance, ações', desk:true},
+    {n:'24', f:'24-admin-parceiro-detalhe.html', t:'Detalhe do parceiro', d:'Performance, histórico, nível', desk:true},
+    {n:'25', f:'25-admin-convidar-parceiro.html', t:'Convidar parceiro', d:'Individual, link e em massa', desk:true},
+    {n:'31', f:'31-admin-campanhas.html', t:'Construtor de campanha', d:'Público, formato, recompensas por nível', desk:true},
+    {n:'14', f:'14-admin-webhooks.html', t:'Webhooks', d:'Integrações, eventos, logs', desk:true},
+    {n:'26', f:'26-admin-configuracoes.html', t:'Configurações · Conta', d:'Conta, 2FA, equipe', desk:true},
+    {n:'29', f:'29-admin-usuarios.html', t:'Usuários & papéis', d:'Admin × Operação, matriz', desk:true},
+    {n:'30', f:'30-admin-personalizacao.html', t:'Personalização', d:'Marca, domínio, nomenclatura', desk:true},
+  ]},
+  {g:'Camada de Plataforma (Super Admin)', icon:'layers', items:[
+    {n:'32', f:'32-onboarding-organizacao.html', t:'Criar ambiente', d:'Wizard de provisionamento de empresa', desk:true},
+    {n:'33', f:'33-plataforma-organizacoes.html', t:'Organizações', d:'Lista de tenants + MRR', desk:true},
+    {n:'34', f:'34-plataforma-organizacao-detalhe.html', t:'Detalhe da organização', d:'Plano, uso, suspender/ativar', desk:true},
+    {n:'35', f:'35-plataforma-planos-billing.html', t:'Planos & billing', d:'Tiers, faturas, MRR', desk:true},
+  ]},
+  {g:'Telas Públicas & Sistema', icon:'globe', items:[
+    {n:'15', f:'15-landing-cobranded.html', t:'Landing co-branded', d:'Página do lead + oferta', desk:true},
+    {n:'27', f:'27-lead-sucesso.html', t:'Lead · confirmação', d:'Pós-envio do formulário', desk:true},
+    {n:'36', f:'36-campanha-landing.html', t:'Landing da campanha', d:'Página pública gerada pelo construtor', desk:true},
+    {n:'16', f:'16-leaderboard.html', t:'Ranking', d:'Pódio, níveis, conquistas'},
+    {n:'17', f:'17-biblioteca-publica.html', t:'Biblioteca & regras', d:'Como funciona + regras'},
+    {n:'28', f:'28-404.html', t:'Erro 404', d:'Página não encontrada', desk:true},
+  ]},
+];
+const grid=document.getElementById('grid');
+screens.forEach(sec=>{
+  const wrap=document.createElement('section');
+  wrap.innerHTML=`<div class="flex items-center gap-3 mb-5"><span class="pin" style="background:var(--surface-3);color:var(--text-muted)"><i data-lucide="${sec.icon}" style="width:13px;height:13px"></i> ${sec.g}</span><span class="text-sm font-data" style="color:var(--text-subtle)">${sec.items.length} telas</span><span class="sec-line"></span></div>`;
+  const g=document.createElement('div');g.className='grid sm:grid-cols-2 lg:grid-cols-3 gap-5';
+  sec.items.forEach(it=>{
+    const a=document.createElement('a');a.href=it.f;a.className='card block';
+    a.innerHTML=`<div class="thumb ${it.desk?'desk':''}"><iframe src="${it.f}" loading="lazy" title="${it.t}"></iframe><div class="thumb-overlay"><span class="btn btn-primary" style="padding:.45rem .9rem;font-size:.8rem"><i data-lucide="external-link" style="width:15px;height:15px"></i> Abrir</span></div></div><div class="p-4 flex items-start gap-3"><span class="num mt-0.5">${it.n}</span><div class="flex-1 min-w-0"><p class="font-bold leading-tight">${it.t}</p><p class="text-xs mt-0.5" style="color:var(--text-subtle)">${it.d}</p></div><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:var(--text-subtle)"></i></div>`;
+    g.appendChild(a);
+  });
+  wrap.appendChild(g);grid.appendChild(wrap);
+});
+(function(){if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark')})();
+function toggleTheme(){const h=document.documentElement;h.classList.toggle('dark');const d=h.classList.contains('dark');document.getElementById('themeLabel').textContent=d?'Claro':'Escuro';document.getElementById('tIcon').setAttribute('data-lucide',d?'sun':'moon');lucide.createIcons()}
+lucide.createIcons();
+if(document.documentElement.classList.contains('dark')){document.getElementById('themeLabel').textContent='Claro';document.getElementById('tIcon').setAttribute('data-lucide','sun');lucide.createIcons()}
+</script>
+</body>
+</html>
