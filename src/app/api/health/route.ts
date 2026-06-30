@@ -1,16 +1,13 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
+// Por enquanto so confirma que o app esta no ar.
+// Na etapa do banco, voltamos a checar a conexao com o Supabase.
 export async function GET() {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    return NextResponse.json({ status: "ok", db: "connected" });
-  } catch {
-    return NextResponse.json(
-      { status: "degraded", db: "unreachable" },
-      { status: 503 }
-    );
-  }
+  return NextResponse.json({
+    status: "ok",
+    app: "no ar",
+    banco: "sera conectado na proxima etapa",
+  });
 }
