@@ -1,0 +1,234 @@
+// Indiko — modelo de dados v0.2 (multi-tenant + papéis)
+// Prisma + PostgreSQL. Dinheiro em CENTAVOS. Percentual em base 10000 (10000 = 100%).
+// Regra dura: TODA entidade de negócio é escopada por organizacaoId.
+// Em Supabase, ativar RLS por organizacao_id.
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")  // conexão pooled (porta 6543)
+  directUrl = env("DIRECT_URL")    // conexão direta p/ migrations (porta 5432)
+}
+generator client { provider = "prisma-client-js" }
+
+enum Papel { SUPER_ADMIN  ADMIN  OPERACAO }
+enum OrgStatus { ATIVA  TRIAL  SUSPENSA }
+enum Recorrencia { ONE_SHOT  RECORRENTE }
+enum TipoComissaoRegra { PERCENTUAL  VALOR_FIXO }
+enum ReferralStatus { AGUARDANDO_CONTATO  EM_NEGOCIACAO  CONVERTIDA  PERDIDA  DESCARTADA }
+enum CommissionStatus { PENDENTE  DISPONIVEL  PAGA  CANCELADA }
+enum WithdrawalStatus { EM_ANALISE  APROVADO  PAGO  REJEITADO }
+enum PartnerStatus { ATIVO  INATIVO  BANIDO }
+
+model Organizacao {
+  id            String     @id @default(cuid())
+  nome          String
+  slug          String     @unique
+  dominioCustom String?
+  branding      Json?      // { logoUrl, corPrimaria, corSecundaria, fonte }
+  plano         String     @default("mvp")
+  status        OrgStatus  @default(ATIVA)
+  criadaEm      DateTime   @default(now())
+
+  usuarios   Usuario[]
+  parceiros  Parceiro[]
+  programas  Programa[]
+  produtos   Produto[]
+  indicacoes Indicacao[]
+  comissoes  Comissao[]
+  campanhas  Campanha[]
+}
+
+model Usuario {
+  id             String       @id @default(cuid())
+  organizacaoId  String?      // null para SUPER_ADMIN (plataforma)
+  organizacao    Organizacao? @relation(fields: [organizacaoId], references: [id])
+  nome           String
+  email          String       @unique
+  senhaHash      String
+  papel          Papel        @default(OPERACAO)
+  twofaAtivo     Boolean      @default(false)
+  criadoEm       DateTime     @default(now())
+}
+
+model Programa {
+  id                   String      @id @default(cuid())
+  organizacaoId        String
+  organizacao          Organizacao @relation(fields: [organizacaoId], references: [id])
+  nome                 String
+  slug                 String
+  descricao            String?
+  ativo                Boolean     @default(true)
+  tetoRecorrenciaMeses Int         @default(12)
+  publicoAlvo          String?
+
+  niveis    Nivel[]
+  regras    ComissaoRegra[]
+  parceiros Parceiro[]
+  campanhas Campanha[]
+
+  @@unique([organizacaoId, slug])
+}
+
+model Nivel {
+  id                  String   @id @default(cuid())
+  organizacaoId       String
+  programaId          String
+  programa            Programa @relation(fields: [programaId], references: [id])
+  nome                String   // CONFIGURÁVEL (ex.: Marinheiro/Capitão/Almirante)
+  ordem               Int
+  regraSubida         String?
+  regraCadenciaDias   Int?     // ex.: 90 (Capitão), 45 (Almirante)
+  multiplicador       Int      @default(10000) // base 10000 = 1.0x
+  beneficiosExtras    Json?
+  parceiros           Parceiro[]
+}
+
+model Produto {
+  id            String      @id @default(cuid())
+  organizacaoId String
+  organizacao   Organizacao @relation(fields: [organizacaoId], references: [id])
+  nome          String
+  slug          String
+  ativo         Boolean     @default(true)
+  tipo          String
+  valorBaseCents Int        @default(0)
+  regras        ComissaoRegra[]
+  indicacoes    Indicacao[]
+
+  @@unique([organizacaoId, slug])
+}
+
+model ComissaoRegra {
+  id            String            @id @default(cuid())
+  organizacaoId String
+  programaId    String
+  programa      Programa          @relation(fields: [programaId], references: [id])
+  produtoId     String
+  produto       Produto           @relation(fields: [produtoId], references: [id])
+  tipo          TipoComissaoRegra
+  valor         Int               // centavos (VALOR_FIXO) ou base 10000 (PERCENTUAL)
+  recorrencia   Recorrencia       @default(ONE_SHOT)
+  tetoMeses     Int?
+
+  @@unique([programaId, produtoId])
+}
+
+model Parceiro {
+  id                     String        @id @default(cuid())
+  organizacaoId          String
+  organizacao            Organizacao   @relation(fields: [organizacaoId], references: [id])
+  nome                   String
+  email                  String
+  telefone               String?
+  cpfCnpj                String?
+  pixChave               String?
+  programaId             String
+  programa               Programa      @relation(fields: [programaId], references: [id])
+  nivelId                String?
+  nivel                  Nivel?        @relation(fields: [nivelId], references: [id])
+  dataCadastro           DateTime      @default(now())
+  ultimaIndicacaoValida  DateTime?
+  status                 PartnerStatus @default(ATIVO)
+  optInLeaderboard       Boolean       @default(true)
+  optInNotificacoes      Boolean       @default(true)
+
+  indicacoes  Indicacao[]
+  comissoes   Comissao[]
+
+  @@unique([organizacaoId, email])
+}
+
+model Campanha {
+  id            String      @id @default(cuid())
+  organizacaoId String
+  organizacao   Organizacao @relation(fields: [organizacaoId], references: [id])
+  programaId    String
+  programa      Programa    @relation(fields: [programaId], references: [id])
+  nome          String
+  slug          String
+  ativo         Boolean     @default(true)
+  periodoInicio DateTime?
+  periodoFim    DateTime?
+  landingConfig Json?       // { headline, oferta, cor, imagem }
+  ofertaCupom   String?
+  indicacoes    Indicacao[]
+
+  @@unique([organizacaoId, slug])
+}
+
+model Indicacao {
+  id            String         @id @default(cuid())
+  organizacaoId String
+  organizacao   Organizacao    @relation(fields: [organizacaoId], references: [id])
+  parceiroId    String
+  parceiro      Parceiro       @relation(fields: [parceiroId], references: [id])
+  produtoId     String
+  produto       Produto        @relation(fields: [produtoId], references: [id])
+  campanhaId    String?
+  campanha      Campanha?      @relation(fields: [campanhaId], references: [id])
+  leadNome      String
+  leadEmail     String?
+  leadTelefone  String?
+  leadCpfCnpj   String?
+  status        ReferralStatus @default(AGUARDANDO_CONTATO)
+  utmSource     String?
+  utmCampaign   String?
+  clickupCardId String?
+  conexaClienteId String?
+  criadaEm      DateTime       @default(now())
+  convertidaEm  DateTime?
+  comissoes     Comissao[]
+}
+
+model Comissao {
+  id            String           @id @default(cuid())
+  organizacaoId String
+  organizacao   Organizacao      @relation(fields: [organizacaoId], references: [id])
+  indicacaoId   String
+  indicacao     Indicacao        @relation(fields: [indicacaoId], references: [id])
+  parceiroId    String
+  parceiro      Parceiro         @relation(fields: [parceiroId], references: [id])
+  tipo          Recorrencia      @default(ONE_SHOT)
+  valorBrutoCents Int
+  valorLiquidoCents Int
+  status        CommissionStatus @default(PENDENTE)
+  mesReferencia String?          // "2026-06" para recorrente
+  geradaEm      DateTime         @default(now())
+  pagaEm        DateTime?
+  pagamentoLoteId String?
+}
+
+model PagamentoLote {
+  id            String   @id @default(cuid())
+  organizacaoId String
+  dataGeracao   DateTime @default(now())
+  dataPagamento DateTime?
+  status        String   @default("aberto")
+  totalCents    Int      @default(0)
+  totalParceiros Int     @default(0)
+  csvExportUrl  String?
+}
+
+model WebhookLog {
+  id              String   @id @default(cuid())
+  organizacaoId   String
+  origem          String   // conexa | clickup
+  payloadRaw      Json
+  eventoTipo      String
+  indicacaoId     String?
+  status          String   // recebido | processado | ignorado_dedupe | erro
+  hashIdempotencia String  @unique
+  recebidoEm      DateTime @default(now())
+  processadoEm    DateTime?
+}
+
+model EventoNivel {
+  id            String   @id @default(cuid())
+  organizacaoId String
+  parceiroId    String
+  tipo          String   // subida | descida | aviso_previo
+  deNivelId     String?
+  paraNivelId   String?
+  motivo        String?
+  ocorridoEm    DateTime @default(now())
+}
