@@ -1,13 +1,28 @@
 import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-// Por enquanto so confirma que o app esta no ar.
-// Na etapa do banco, voltamos a checar a conexao com o Supabase.
+// Verificacao de saude: alem de confirmar que o app esta no ar, faz uma
+// pergunta minima ao banco (SELECT 1) para provar que a conexao com o
+// Supabase esta viva. Util para validar o deploy na Vercel.
 export async function GET() {
-  return NextResponse.json({
-    status: "ok",
-    app: "no ar",
-    banco: "sera conectado na proxima etapa",
-  });
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return NextResponse.json({
+      status: "ok",
+      app: "no ar",
+      db: "connected",
+    });
+  } catch (erro) {
+    console.error("Falha ao conectar no banco:", erro);
+    return NextResponse.json(
+      {
+        status: "erro",
+        app: "no ar",
+        db: "unreachable",
+      },
+      { status: 503 },
+    );
+  }
 }

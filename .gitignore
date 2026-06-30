@@ -6,3 +6,6 @@ out
 .DS_Store
 *.log
 .vercel
+
+# Next.js gerado automaticamente
+next-env.d.ts
