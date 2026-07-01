@@ -4,7 +4,9 @@ import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
 import { BadgeStatus } from "@/components/badge-status";
+import { BadgeComissao } from "@/components/badge-comissao";
 import { CopyLink } from "@/components/copy-link";
+import { formatBRL } from "@/lib/comissao";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +51,34 @@ export default async function DetalheParceiro({ params }: { params: { id: string
       rotulo: "Cadastrado em",
       valor: parceiro.dataCadastro.toLocaleDateString("pt-BR"),
     },
+  ];
+
+  // Carteira do parceiro: somatorios por status + comissoes recentes.
+  const [carteira, comissoes] = await Promise.all([
+    prisma.comissao.groupBy({
+      by: ["status"],
+      where: { organizacaoId: orgId, parceiroId: parceiro.id },
+      _sum: { valorLiquidoCents: true },
+    }),
+    prisma.comissao.findMany({
+      where: { organizacaoId: orgId, parceiroId: parceiro.id },
+      orderBy: { geradaEm: "desc" },
+      take: 20,
+      select: {
+        id: true,
+        valorLiquidoCents: true,
+        status: true,
+        geradaEm: true,
+        indicacao: { select: { leadNome: true, produto: { select: { nome: true } } } },
+      },
+    }),
+  ]);
+  const somaCarteira = (s: string) =>
+    carteira.find((g) => g.status === s)?._sum.valorLiquidoCents ?? 0;
+  const carteiraTotais = [
+    { rotulo: "A liberar", valor: somaCarteira("PENDENTE"), cor: "#F59E0B" },
+    { rotulo: "Disponível", valor: somaCarteira("DISPONIVEL"), cor: "#00BBC5" },
+    { rotulo: "Paga", valor: somaCarteira("PAGA"), cor: "#16A34A" },
   ];
 
   const podePausar = parceiro.status !== "BANIDO";
@@ -133,6 +163,42 @@ export default async function DetalheParceiro({ params }: { params: { id: string
               {acaoRotulo}
             </button>
           </form>
+        )}
+      </div>
+
+      {/* Carteira do parceiro */}
+      <div style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 24, marginTop: 16, maxWidth: 640 }}>
+        <h3 style={{ fontSize: 16, fontWeight: 700, margin: "0 0 14px" }}>Carteira</h3>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
+          {carteiraTotais.map((t) => (
+            <div key={t.rotulo} style={{ flex: 1, minWidth: 120, background: "#F7F7F6", borderRadius: 12, padding: "12px 16px" }}>
+              <div style={{ fontSize: 12, color: "#6B6B6B" }}>{t.rotulo}</div>
+              <div style={{ fontSize: 20, fontWeight: 800, marginTop: 2, color: t.cor }}>{formatBRL(t.valor)}</div>
+            </div>
+          ))}
+        </div>
+
+        {comissoes.length === 0 ? (
+          <p style={{ fontSize: 13, color: "#9A9A98", margin: 0 }}>
+            Nenhuma comissão ainda. Elas nascem quando uma indicação deste parceiro vira “Convertida”.
+          </p>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            {comissoes.map((c) => (
+              <div key={c.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, borderTop: "1px solid #F0F0EF", paddingTop: 8 }}>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 14 }}>{c.indicacao?.leadNome ?? "—"}</div>
+                  <div style={{ fontSize: 12, color: "#9A9A98" }}>
+                    {c.indicacao?.produto?.nome ?? "—"} · {c.geradaEm.toLocaleDateString("pt-BR")}
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <span style={{ fontWeight: 700, fontSize: 14 }}>{formatBRL(c.valorLiquidoCents)}</span>
+                  <BadgeComissao status={c.status} />
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </AdminShell>

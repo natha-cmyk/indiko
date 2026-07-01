@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSessaoAtual } from "@/lib/auth";
 import { STATUS_INDICACAO } from "@/components/badge-indicacao";
+import { gerarComissaoParaIndicacao, cancelarComissoesDaIndicacao } from "@/lib/comissao";
 
 export const dynamic = "force-dynamic";
 
@@ -27,10 +28,17 @@ export async function POST(req: Request, { params }: { params: { id: string } })
         where: { id: indicacao.id },
         data: {
           status: novoStatus as never,
-          // Ao converter, marca a data (base para a comissao na Etapa 6).
+          // Ao converter, marca a data (base para a liberacao da comissao).
           ...(novoStatus === "CONVERTIDA" ? { convertidaEm: new Date() } : {}),
         },
       });
+
+      // Dinheiro: converteu -> gera comissao; saiu de convertida -> cancela.
+      if (novoStatus === "CONVERTIDA") {
+        await gerarComissaoParaIndicacao(indicacao.id);
+      } else {
+        await cancelarComissoesDaIndicacao(indicacao.id);
+      }
     }
   }
 

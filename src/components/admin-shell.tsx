@@ -11,7 +11,7 @@ const BORDA = "#E6E6E4";
 const MENU: { rotulo: string; href?: string }[] = [
   { rotulo: "Visão geral", href: "/admin" },
   { rotulo: "Indicações", href: "/admin/indicacoes" },
-  { rotulo: "Resgates" },
+  { rotulo: "Comissões", href: "/admin/comissoes" },
   { rotulo: "Programas" },
   { rotulo: "Parceiros", href: "/admin/parceiros" },
   { rotulo: "Webhooks" },

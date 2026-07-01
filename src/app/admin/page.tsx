@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
+import { formatBRL } from "@/lib/comissao";
 
 export const dynamic = "force-dynamic";
 
@@ -20,6 +21,7 @@ export default async function PainelAdmin() {
     nRegras,
     nParceiros,
     nIndicacoes,
+    aPagar,
     programas,
   ] = await Promise.all([
     prisma.programa.count({ where: { organizacaoId: orgId } }),
@@ -28,12 +30,18 @@ export default async function PainelAdmin() {
     prisma.comissaoRegra.count({ where: { organizacaoId: orgId } }),
     prisma.parceiro.count({ where: { organizacaoId: orgId } }),
     prisma.indicacao.count({ where: { organizacaoId: orgId } }),
+    prisma.comissao.aggregate({
+      where: { organizacaoId: orgId, status: "DISPONIVEL" },
+      _sum: { valorLiquidoCents: true },
+    }),
     prisma.programa.findMany({
       where: { organizacaoId: orgId },
       orderBy: { nome: "asc" },
       select: { id: true, nome: true, publicoAlvo: true, descricao: true, ativo: true },
     }),
   ]);
+
+  const comissaoAPagarCents = aPagar._sum.valorLiquidoCents ?? 0;
 
   const cards = [
     { rotulo: "Programas", valor: nProgramas },
@@ -49,6 +57,27 @@ export default async function PainelAdmin() {
       <p style={{ color: "#6B6B6B", margin: "0 0 20px", fontSize: 14 }}>
         Situação atual do Seahub, lida diretamente do banco de dados.
       </p>
+
+      {/* Destaque: comissão disponível para pagar */}
+      <a
+        href="/admin/comissoes"
+        style={{
+          display: "block",
+          textDecoration: "none",
+          background: "#121111",
+          color: "#fff",
+          borderRadius: 16,
+          padding: 20,
+          marginBottom: 20,
+          maxWidth: 320,
+        }}
+      >
+        <div style={{ fontSize: 13, opacity: 0.8 }}>Comissão a pagar</div>
+        <div style={{ fontSize: 32, fontWeight: 800, marginTop: 4 }}>
+          {formatBRL(comissaoAPagarCents)}
+        </div>
+        <div style={{ fontSize: 12, opacity: 0.7, marginTop: 2 }}>disponível para os parceiros</div>
+      </a>
 
       {/* Cartões com os números reais */}
       <div
