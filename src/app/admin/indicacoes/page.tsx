@@ -3,6 +3,7 @@ import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
 import { STATUS_INDICACAO } from "@/components/badge-indicacao";
+import { FiltroPrograma } from "@/components/filtro-programa";
 import { IndicacoesTabela } from "./tabela";
 
 export const dynamic = "force-dynamic";
@@ -19,11 +20,18 @@ const FILTROS = [
 export default async function ListaIndicacoes({
   searchParams,
 }: {
-  searchParams: { q?: string; status?: string };
+  searchParams: { q?: string; status?: string; programa?: string };
 }) {
   const sessao = await getSessaoAtual();
   if (!sessao) redirect("/admin/login");
   const orgId = sessao.organizacaoId ?? "";
+
+  const programas = await prisma.programa.findMany({
+    where: { organizacaoId: orgId },
+    orderBy: { nome: "asc" },
+    select: { id: true, nome: true },
+  });
+  const programaId = programas.find((p) => p.id === searchParams.programa)?.id ?? "";
 
   const busca = (searchParams.q ?? "").trim();
   const status = STATUS_INDICACAO[searchParams.status ?? ""] ? searchParams.status : "";
@@ -31,6 +39,7 @@ export default async function ListaIndicacoes({
   const indicacoes = await prisma.indicacao.findMany({
     where: {
       organizacaoId: orgId,
+      ...(programaId ? { parceiro: { programaId } } : {}),
       ...(status ? { status: status as never } : {}),
       ...(busca
         ? {
@@ -67,6 +76,11 @@ export default async function ListaIndicacoes({
 
   return (
     <AdminShell titulo="Indicações" atual="Indicações" nome={sessao.nome} papel={sessao.papel}>
+      {/* Filtro por programa (vale para todo o painel) */}
+      <div style={{ marginBottom: 16 }}>
+        <FiltroPrograma programas={programas} />
+      </div>
+
       {/* Filtros por status */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
         {FILTROS.map((f) => {
@@ -74,6 +88,7 @@ export default async function ListaIndicacoes({
           const qs = new URLSearchParams();
           if (f.chave) qs.set("status", f.chave);
           if (busca) qs.set("q", busca);
+          if (programaId) qs.set("programa", programaId);
           const href = `/admin/indicacoes${qs.toString() ? `?${qs}` : ""}`;
           return (
             <a key={f.rotulo} href={href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "7px 14px", borderRadius: 999, border: "1px solid " + (ativo ? "#121111" : "#E6E6E4"), background: ativo ? "#121111" : "#fff", color: ativo ? "#fff" : "#6B6B6B" }}>
@@ -86,6 +101,7 @@ export default async function ListaIndicacoes({
       {/* Busca */}
       <form method="get" style={{ marginBottom: 16 }}>
         {status && <input type="hidden" name="status" value={status} />}
+        {programaId && <input type="hidden" name="programa" value={programaId} />}
         <input
           name="q"
           defaultValue={busca}
@@ -96,7 +112,7 @@ export default async function ListaIndicacoes({
 
       {itens.length === 0 ? (
         <div style={{ background: "#fff", border: "1px dashed #E6E6E4", borderRadius: 16, padding: 40, textAlign: "center", color: "#6B6B6B" }}>
-          {busca || status
+          {busca || status || programaId
             ? "Nenhuma indicação encontrada com esses filtros."
             : "Nenhuma indicação ainda. Elas aparecem aqui quando alguém preenche a landing de um parceiro."}
         </div>

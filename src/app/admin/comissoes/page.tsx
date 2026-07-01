@@ -3,6 +3,7 @@ import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
 import { STATUS_COMISSAO } from "@/components/badge-comissao";
+import { FiltroPrograma } from "@/components/filtro-programa";
 import { formatBRL } from "@/lib/comissao";
 import { ComissoesTabela } from "./tabela";
 
@@ -19,22 +20,32 @@ const FILTROS = [
 export default async function ListaComissoes({
   searchParams,
 }: {
-  searchParams: { status?: string };
+  searchParams: { status?: string; programa?: string };
 }) {
   const sessao = await getSessaoAtual();
   if (!sessao) redirect("/admin/login");
   const orgId = sessao.organizacaoId ?? "";
 
+  const programas = await prisma.programa.findMany({
+    where: { organizacaoId: orgId },
+    orderBy: { nome: "asc" },
+    select: { id: true, nome: true },
+  });
+  const programaId = programas.find((p) => p.id === searchParams.programa)?.id ?? "";
+
   const status = STATUS_COMISSAO[searchParams.status ?? ""] ? searchParams.status : "";
+
+  // Filtro por programa vale para os totais e para a lista.
+  const filtroPrograma = programaId ? { parceiro: { programaId } } : {};
 
   const [agrupado, comissoes] = await Promise.all([
     prisma.comissao.groupBy({
       by: ["status"],
-      where: { organizacaoId: orgId },
+      where: { organizacaoId: orgId, ...filtroPrograma },
       _sum: { valorLiquidoCents: true },
     }),
     prisma.comissao.findMany({
-      where: { organizacaoId: orgId, ...(status ? { status: status as never } : {}) },
+      where: { organizacaoId: orgId, ...filtroPrograma, ...(status ? { status: status as never } : {}) },
       orderBy: { geradaEm: "desc" },
       select: {
         id: true,
@@ -66,6 +77,11 @@ export default async function ListaComissoes({
 
   return (
     <AdminShell titulo="Comissões" atual="Comissões" nome={sessao.nome} papel={sessao.papel}>
+      {/* Filtro por programa (vale para todo o painel) */}
+      <div style={{ marginBottom: 16 }}>
+        <FiltroPrograma programas={programas} />
+      </div>
+
       {/* Totais + acao automatica por tempo */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 16, flexWrap: "wrap", marginBottom: 8 }}>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -84,11 +100,14 @@ export default async function ListaComissoes({
         </form>
       </div>
 
-      {/* Filtros */}
+      {/* Filtros por status */}
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", margin: "16px 0" }}>
         {FILTROS.map((f) => {
           const ativo = (status || "") === f.chave;
-          const href = `/admin/comissoes${f.chave ? `?status=${f.chave}` : ""}`;
+          const qs = new URLSearchParams();
+          if (f.chave) qs.set("status", f.chave);
+          if (programaId) qs.set("programa", programaId);
+          const href = `/admin/comissoes${qs.toString() ? `?${qs}` : ""}`;
           return (
             <a key={f.rotulo} href={href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "7px 14px", borderRadius: 999, border: "1px solid " + (ativo ? "#121111" : "#E6E6E4"), background: ativo ? "#121111" : "#fff", color: ativo ? "#fff" : "#6B6B6B" }}>
               {f.rotulo}
@@ -99,7 +118,7 @@ export default async function ListaComissoes({
 
       {itens.length === 0 ? (
         <div style={{ background: "#fff", border: "1px dashed #E6E6E4", borderRadius: 16, padding: 40, textAlign: "center", color: "#6B6B6B" }}>
-          Nenhuma comissão {status ? "nesse filtro" : "ainda"}. Elas nascem quando uma indicação vira “Convertida”.
+          Nenhuma comissão {status || programaId ? "nesse filtro" : "ainda"}. Elas nascem quando uma indicação vira “Convertida”.
         </div>
       ) : (
         <ComissoesTabela comissoes={itens} />
