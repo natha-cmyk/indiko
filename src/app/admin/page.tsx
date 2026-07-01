@@ -46,10 +46,10 @@ export default async function PainelAdmin() {
         </div>
 
         <h1 style={{ fontSize: 22, margin: "0 0 6px" }}>
-          Voce esta logado ✅
+          Você está logado ✅
         </h1>
         <p style={{ color: "#6B6B6B", margin: "0 0 24px" }}>
-          Autenticacao funcionando. O dashboard com dados reais vem na proxima etapa.
+          Autenticação funcionando. O dashboard com dados reais vem na próxima etapa.
         </p>
 
         <dl style={{ margin: 0, fontSize: 14, lineHeight: 2 }}>
@@ -75,7 +75,7 @@ export default async function PainelAdmin() {
             </span>
           </div>
           <div>
-            <strong>Organizacao:</strong> {sessao.organizacaoId ?? "—"}
+            <strong>Organização:</strong> {sessao.organizacaoId ?? "—"}
           </div>
         </dl>
 

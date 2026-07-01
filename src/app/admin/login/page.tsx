@@ -33,13 +33,13 @@ function Formulario() {
       });
       const dados = await resp.json();
       if (!resp.ok) {
-        setErro(dados.erro || "Nao foi possivel entrar.");
+        setErro(dados.erro || "Não foi possível entrar.");
         return;
       }
       router.push(proximo);
       router.refresh();
     } catch {
-      setErro("Erro de conexao. Tente novamente.");
+      setErro("Erro de conexão. Tente novamente.");
     } finally {
       setCarregando(false);
     }
@@ -88,7 +88,7 @@ function Formulario() {
               Indiko <span style={{ color: "#FF001E" }}>Admin</span>
             </div>
             <div style={{ fontSize: 12, color: "#9A9A98" }}>
-              Painel de gestao · Seahub
+              Painel de gestão · Seahub
             </div>
           </div>
         </div>
