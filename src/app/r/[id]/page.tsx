@@ -48,12 +48,17 @@ export default async function LandingIndicacao({ params }: { params: { id: strin
   const branding = (parceiro.organizacao?.branding ?? {}) as { corPrimaria?: string };
   const cor = branding.corPrimaria || "#FF001E";
 
+  // WhatsApp do Seahub (formato internacional, so digitos). Futuramente pode
+  // vir das configuracoes da organizacao.
+  const whatsapp = "5584981352287";
+
   return (
     <LandingForm
       parceiroId={parceiro.id}
       parceiroNome={parceiro.nome}
       orgNome={orgNome}
       cor={cor}
+      whatsapp={whatsapp}
       produtos={produtos}
     />
   );

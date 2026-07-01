@@ -9,12 +9,14 @@ export function LandingForm({
   parceiroNome,
   orgNome,
   cor,
+  whatsapp,
   produtos,
 }: {
   parceiroId: string;
   parceiroNome: string;
   orgNome: string;
   cor: string;
+  whatsapp: string;
   produtos: Produto[];
 }) {
   const [leadNome, setLeadNome] = useState("");
@@ -24,6 +26,7 @@ export function LandingForm({
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
+  const [waUrl, setWaUrl] = useState("");
 
   const iniciais = parceiroNome
     .split(" ")
@@ -47,7 +50,16 @@ export function LandingForm({
         setErro(dados.erro || "Não foi possível enviar.");
         return;
       }
+      // Monta a mensagem pronta e redireciona para o WhatsApp do Seahub.
+      const prod = produtos.find((p) => p.id === produtoId);
+      const msg =
+        `Oi! Vim pela indicação de ${parceiroNome}` +
+        (prod ? ` e quero saber sobre ${prod.nome}` : "") +
+        `. Meu nome é ${leadNome}.`;
+      const url = `https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`;
+      setWaUrl(url);
       setEnviado(true);
+      window.location.href = url;
     } catch {
       setErro("Erro de conexão. Tente novamente.");
     } finally {
@@ -81,11 +93,19 @@ export function LandingForm({
 
           {enviado ? (
             <div style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 32, textAlign: "center", boxShadow: "0 12px 40px rgba(18,17,17,.10)" }}>
-              <div style={{ fontSize: 40 }}>✅</div>
-              <h2 style={{ fontSize: 22, fontWeight: 800, margin: "12px 0 6px" }}>Recebemos seu contato!</h2>
-              <p style={{ color: "#6B6B6B", margin: 0 }}>
-                O {orgNome} vai falar com você em breve — normalmente em até 1 dia útil. Obrigado, e valeu pela indicação da {parceiroNome.split(" ")[0]}! 🙌
+              <div style={{ fontSize: 40 }}>💬</div>
+              <h2 style={{ fontSize: 22, fontWeight: 800, margin: "12px 0 6px" }}>Tudo certo!</h2>
+              <p style={{ color: "#6B6B6B", margin: "0 0 16px" }}>
+                Estamos te levando ao WhatsApp do {orgNome}. Se não abrir automaticamente, é só tocar no botão abaixo.
               </p>
+              {waUrl && (
+                <a
+                  href={waUrl}
+                  style={{ display: "inline-block", background: cor, color: "#fff", textDecoration: "none", fontWeight: 700, fontSize: 15, borderRadius: 12, padding: "13px 22px" }}
+                >
+                  Abrir WhatsApp
+                </a>
+              )}
             </div>
           ) : (
             <form onSubmit={enviar} style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 28, boxShadow: "0 12px 40px rgba(18,17,17,.10)" }}>
