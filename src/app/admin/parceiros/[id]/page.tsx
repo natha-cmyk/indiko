@@ -96,14 +96,14 @@ export default async function DetalheParceiro({ params }: { params: { id: string
         ← Voltar para a lista
       </a>
 
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start", marginTop: 12 }}>
       <div
         style={{
           background: "#fff",
           border: "1px solid #E6E6E4",
           borderRadius: 16,
           padding: 24,
-          marginTop: 12,
-          maxWidth: 640,
+          flex: "1 1 340px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
@@ -166,8 +166,8 @@ export default async function DetalheParceiro({ params }: { params: { id: string
         )}
       </div>
 
-      {/* Carteira do parceiro */}
-      <div style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 24, marginTop: 16, maxWidth: 640 }}>
+      {/* Carteira do parceiro (ao lado das informacoes) */}
+      <div style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 24, flex: "1 1 320px" }}>
         <h3 style={{ fontSize: 16, fontWeight: 700, margin: "0 0 14px" }}>Carteira</h3>
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 18 }}>
           {carteiraTotais.map((t) => (
@@ -200,6 +200,7 @@ export default async function DetalheParceiro({ params }: { params: { id: string
             ))}
           </div>
         )}
+      </div>
       </div>
     </AdminShell>
   );

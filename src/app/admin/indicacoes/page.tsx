@@ -2,7 +2,8 @@ import { redirect } from "next/navigation";
 import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
-import { BadgeIndicacao, STATUS_INDICACAO } from "@/components/badge-indicacao";
+import { STATUS_INDICACAO } from "@/components/badge-indicacao";
+import { IndicacoesTabela } from "./tabela";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +55,16 @@ export default async function ListaIndicacoes({
     },
   });
 
+  const itens = indicacoes.map((i) => ({
+    id: i.id,
+    leadNome: i.leadNome,
+    contato: i.leadTelefone || i.leadEmail || "—",
+    parceiroNome: i.parceiro?.nome ?? "—",
+    produtoNome: i.produto?.nome ?? "—",
+    dataLabel: i.criadaEm.toLocaleDateString("pt-BR"),
+    status: i.status,
+  }));
+
   return (
     <AdminShell titulo="Indicações" atual="Indicações" nome={sessao.nome} papel={sessao.papel}>
       {/* Filtros por status */}
@@ -65,20 +76,7 @@ export default async function ListaIndicacoes({
           if (busca) qs.set("q", busca);
           const href = `/admin/indicacoes${qs.toString() ? `?${qs}` : ""}`;
           return (
-            <a
-              key={f.rotulo}
-              href={href}
-              style={{
-                textDecoration: "none",
-                fontSize: 13,
-                fontWeight: 600,
-                padding: "7px 14px",
-                borderRadius: 999,
-                border: "1px solid " + (ativo ? "#121111" : "#E6E6E4"),
-                background: ativo ? "#121111" : "#fff",
-                color: ativo ? "#fff" : "#6B6B6B",
-              }}
-            >
+            <a key={f.rotulo} href={href} style={{ textDecoration: "none", fontSize: 13, fontWeight: 600, padding: "7px 14px", borderRadius: 999, border: "1px solid " + (ativo ? "#121111" : "#E6E6E4"), background: ativo ? "#121111" : "#fff", color: ativo ? "#fff" : "#6B6B6B" }}>
               {f.rotulo}
             </a>
           );
@@ -92,69 +90,19 @@ export default async function ListaIndicacoes({
           name="q"
           defaultValue={busca}
           placeholder="Buscar por indicado ou parceiro..."
-          style={{
-            width: "100%",
-            maxWidth: 420,
-            boxSizing: "border-box",
-            border: "1px solid #E6E6E4",
-            borderRadius: 12,
-            padding: "10px 14px",
-            fontSize: 14,
-            fontFamily: "inherit",
-            background: "#fff",
-          }}
+          style={{ width: "100%", maxWidth: 420, boxSizing: "border-box", border: "1px solid #E6E6E4", borderRadius: 12, padding: "10px 14px", fontSize: 14, fontFamily: "inherit", background: "#fff" }}
         />
       </form>
 
-      {indicacoes.length === 0 ? (
-        <div
-          style={{
-            background: "#fff",
-            border: "1px dashed #E6E6E4",
-            borderRadius: 16,
-            padding: 40,
-            textAlign: "center",
-            color: "#6B6B6B",
-          }}
-        >
+      {itens.length === 0 ? (
+        <div style={{ background: "#fff", border: "1px dashed #E6E6E4", borderRadius: 16, padding: 40, textAlign: "center", color: "#6B6B6B" }}>
           {busca || status
             ? "Nenhuma indicação encontrada com esses filtros."
             : "Nenhuma indicação ainda. Elas aparecem aqui quando alguém preenche a landing de um parceiro."}
         </div>
       ) : (
-        <div style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, overflow: "hidden" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
-            <thead>
-              <tr style={{ textAlign: "left", color: "#9A9A98", fontSize: 12 }}>
-                <th style={th}>Indicado</th>
-                <th style={th}>Parceiro</th>
-                <th style={th}>Produto</th>
-                <th style={th}>Data</th>
-                <th style={th}>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {indicacoes.map((i) => (
-                <tr key={i.id} style={{ borderTop: "1px solid #F0F0EF" }}>
-                  <td style={td}>
-                    <a href={`/admin/indicacoes/${i.id}`} style={{ color: "#121111", textDecoration: "none", fontWeight: 600 }}>
-                      {i.leadNome}
-                    </a>
-                    <div style={{ fontSize: 12, color: "#9A9A98" }}>{i.leadTelefone || i.leadEmail || "—"}</div>
-                  </td>
-                  <td style={td}>{i.parceiro?.nome ?? "—"}</td>
-                  <td style={td}>{i.produto?.nome ?? "—"}</td>
-                  <td style={td}>{i.criadaEm.toLocaleDateString("pt-BR")}</td>
-                  <td style={td}><BadgeIndicacao status={i.status} /></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <IndicacoesTabela indicacoes={itens} />
       )}
     </AdminShell>
   );
 }
-
-const th: React.CSSProperties = { padding: "12px 16px", fontWeight: 700, textTransform: "uppercase", letterSpacing: 0.5 };
-const td: React.CSSProperties = { padding: "14px 16px" };

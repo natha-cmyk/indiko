@@ -21,7 +21,7 @@ export default async function PainelAdmin() {
     nRegras,
     nParceiros,
     nIndicacoes,
-    aPagar,
+    disponiveis,
     programas,
   ] = await Promise.all([
     prisma.programa.count({ where: { organizacaoId: orgId } }),
@@ -30,9 +30,12 @@ export default async function PainelAdmin() {
     prisma.comissaoRegra.count({ where: { organizacaoId: orgId } }),
     prisma.parceiro.count({ where: { organizacaoId: orgId } }),
     prisma.indicacao.count({ where: { organizacaoId: orgId } }),
-    prisma.comissao.aggregate({
+    prisma.comissao.findMany({
       where: { organizacaoId: orgId, status: "DISPONIVEL" },
-      _sum: { valorLiquidoCents: true },
+      select: {
+        valorLiquidoCents: true,
+        parceiro: { select: { programa: { select: { nome: true } } } },
+      },
     }),
     prisma.programa.findMany({
       where: { organizacaoId: orgId },
@@ -41,7 +44,15 @@ export default async function PainelAdmin() {
     }),
   ]);
 
-  const comissaoAPagarCents = aPagar._sum.valorLiquidoCents ?? 0;
+  // "Comissão a pagar" (disponível), detalhada por programa.
+  const porProgramaMap = new Map<string, number>();
+  let comissaoAPagarCents = 0;
+  for (const c of disponiveis) {
+    const nome = c.parceiro?.programa?.nome ?? "Sem programa";
+    porProgramaMap.set(nome, (porProgramaMap.get(nome) ?? 0) + c.valorLiquidoCents);
+    comissaoAPagarCents += c.valorLiquidoCents;
+  }
+  const porPrograma = [...porProgramaMap.entries()].sort((a, b) => b[1] - a[1]);
 
   const cards = [
     { rotulo: "Programas", valor: nProgramas },
@@ -69,7 +80,7 @@ export default async function PainelAdmin() {
           borderRadius: 16,
           padding: 20,
           marginBottom: 20,
-          maxWidth: 320,
+          maxWidth: 380,
         }}
       >
         <div style={{ fontSize: 13, opacity: 0.8 }}>Comissão a pagar</div>
@@ -77,6 +88,16 @@ export default async function PainelAdmin() {
           {formatBRL(comissaoAPagarCents)}
         </div>
         <div style={{ fontSize: 12, opacity: 0.7, marginTop: 2 }}>disponível para os parceiros</div>
+        {porPrograma.length > 0 && (
+          <div style={{ marginTop: 14, borderTop: "1px solid rgba(255,255,255,.15)", paddingTop: 12, display: "flex", flexDirection: "column", gap: 6 }}>
+            {porPrograma.map(([nome, valor]) => (
+              <div key={nome} style={{ display: "flex", justifyContent: "space-between", fontSize: 13 }}>
+                <span style={{ opacity: 0.85 }}>{nome}</span>
+                <span style={{ fontWeight: 700 }}>{formatBRL(valor)}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </a>
 
       {/* Cartões com os números reais */}
