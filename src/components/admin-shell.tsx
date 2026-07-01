@@ -13,17 +13,19 @@ const MENU: { rotulo: string; href?: string }[] = [
   { rotulo: "Indicações" },
   { rotulo: "Resgates" },
   { rotulo: "Programas" },
-  { rotulo: "Parceiros" },
+  { rotulo: "Parceiros", href: "/admin/parceiros" },
   { rotulo: "Webhooks" },
 ];
 
 export function AdminShell({
   titulo,
+  atual,
   nome,
   papel,
   children,
 }: {
   titulo: string;
+  atual: string; // rotulo do item de menu ativo
   nome: string;
   papel: string;
   children: ReactNode;
@@ -68,7 +70,7 @@ export function AdminShell({
 
         <nav style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
           {MENU.map((item) => {
-            const ativo = item.href === "/admin" && titulo === "Visão geral";
+            const ativo = item.rotulo === atual;
             const base: React.CSSProperties = {
               display: "flex",
               alignItems: "center",

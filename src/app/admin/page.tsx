@@ -45,7 +45,7 @@ export default async function PainelAdmin() {
   ];
 
   return (
-    <AdminShell titulo="Visão geral" nome={sessao.nome} papel={sessao.papel}>
+    <AdminShell titulo="Visão geral" atual="Visão geral" nome={sessao.nome} papel={sessao.papel}>
       <p style={{ color: "#6B6B6B", margin: "0 0 20px", fontSize: 14 }}>
         Situação atual do Seahub, lida diretamente do banco de dados.
       </p>
