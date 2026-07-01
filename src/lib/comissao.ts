@@ -76,3 +76,22 @@ export async function cancelarComissoesDaIndicacao(indicacaoId: string): Promise
     data: { status: "CANCELADA" },
   });
 }
+
+// Aplica um novo status a uma indicacao e ajusta a comissao:
+// converteu -> gera; saiu de convertida -> cancela.
+// Reaproveitado pela mudanca manual e pelos webhooks. NAO valida organizacao
+// (quem chama ja deve ter conferido).
+export async function aplicarStatusIndicacao(indicacaoId: string, status: string): Promise<void> {
+  await prisma.indicacao.update({
+    where: { id: indicacaoId },
+    data: {
+      status: status as never,
+      ...(status === "CONVERTIDA" ? { convertidaEm: new Date() } : {}),
+    },
+  });
+  if (status === "CONVERTIDA") {
+    await gerarComissaoParaIndicacao(indicacaoId);
+  } else {
+    await cancelarComissoesDaIndicacao(indicacaoId);
+  }
+}

@@ -14,7 +14,7 @@ const MENU: { rotulo: string; href?: string }[] = [
   { rotulo: "Comissões", href: "/admin/comissoes" },
   { rotulo: "Programas" },
   { rotulo: "Parceiros", href: "/admin/parceiros" },
-  { rotulo: "Webhooks" },
+  { rotulo: "Webhooks", href: "/admin/webhooks" },
 ];
 
 export function AdminShell({
