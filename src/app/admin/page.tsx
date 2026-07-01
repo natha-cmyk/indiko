@@ -1,103 +1,132 @@
 import { redirect } from "next/navigation";
 import { getSessaoAtual } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { AdminShell } from "@/components/admin-shell";
 
 export const dynamic = "force-dynamic";
 
-// Pagina protegida de teste. O middleware ja bloqueia quem nao esta logado;
-// aqui lemos a sessao so para mostrar quem entrou. (Dashboard real = Etapa 3.)
+// Dashboard do admin. Le numeros reais do banco, sempre filtrando pela
+// organizacao do usuario logado (regra multi-empresa).
 export default async function PainelAdmin() {
   const sessao = await getSessaoAtual();
   if (!sessao) redirect("/admin/login");
 
+  const orgId = sessao.organizacaoId ?? "";
+
+  const [
+    nProgramas,
+    nNiveis,
+    nProdutos,
+    nRegras,
+    nParceiros,
+    nIndicacoes,
+    programas,
+  ] = await Promise.all([
+    prisma.programa.count({ where: { organizacaoId: orgId } }),
+    prisma.nivel.count({ where: { organizacaoId: orgId } }),
+    prisma.produto.count({ where: { organizacaoId: orgId } }),
+    prisma.comissaoRegra.count({ where: { organizacaoId: orgId } }),
+    prisma.parceiro.count({ where: { organizacaoId: orgId } }),
+    prisma.indicacao.count({ where: { organizacaoId: orgId } }),
+    prisma.programa.findMany({
+      where: { organizacaoId: orgId },
+      orderBy: { nome: "asc" },
+      select: { id: true, nome: true, publicoAlvo: true, descricao: true, ativo: true },
+    }),
+  ]);
+
+  const cards = [
+    { rotulo: "Programas", valor: nProgramas },
+    { rotulo: "Níveis", valor: nNiveis },
+    { rotulo: "Produtos", valor: nProdutos },
+    { rotulo: "Regras de comissão", valor: nRegras },
+    { rotulo: "Parceiros", valor: nParceiros },
+    { rotulo: "Indicações", valor: nIndicacoes },
+  ];
+
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        background: "#F7F7F6",
-        fontFamily: "'Montserrat', system-ui, sans-serif",
-        padding: 24,
-      }}
-    >
+    <AdminShell titulo="Visão geral" nome={sessao.nome} papel={sessao.papel}>
+      <p style={{ color: "#6B6B6B", margin: "0 0 20px", fontSize: 14 }}>
+        Situação atual do Seahub, lida diretamente do banco de dados.
+      </p>
+
+      {/* Cartões com os números reais */}
       <div
         style={{
-          maxWidth: 560,
-          margin: "60px auto",
-          background: "#fff",
-          border: "1px solid #E6E6E4",
-          borderRadius: 16,
-          padding: 32,
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+          gap: 16,
+          marginBottom: 28,
         }}
       >
-        <div
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 12,
-            background: "#FF001E",
-            color: "#fff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: 800,
-            marginBottom: 20,
-          }}
-        >
-          in
-        </div>
-
-        <h1 style={{ fontSize: 22, margin: "0 0 6px" }}>
-          Você está logado ✅
-        </h1>
-        <p style={{ color: "#6B6B6B", margin: "0 0 24px" }}>
-          Autenticação funcionando. O dashboard com dados reais vem na próxima etapa.
-        </p>
-
-        <dl style={{ margin: 0, fontSize: 14, lineHeight: 2 }}>
-          <div>
-            <strong>Nome:</strong> {sessao.nome}
-          </div>
-          <div>
-            <strong>E-mail:</strong> {sessao.email}
-          </div>
-          <div>
-            <strong>Papel:</strong>{" "}
-            <span
-              style={{
-                background: "#FF001E14",
-                color: "#FF001E",
-                fontWeight: 700,
-                borderRadius: 8,
-                padding: "2px 10px",
-                fontSize: 13,
-              }}
-            >
-              {sessao.papel}
-            </span>
-          </div>
-          <div>
-            <strong>Organização:</strong> {sessao.organizacaoId ?? "—"}
-          </div>
-        </dl>
-
-        <form action="/api/auth/logout" method="post" style={{ marginTop: 28 }}>
-          <button
-            type="submit"
+        {cards.map((c) => (
+          <div
+            key={c.rotulo}
             style={{
               background: "#fff",
-              color: "#121111",
               border: "1px solid #E6E6E4",
-              borderRadius: 12,
-              padding: "11px 18px",
-              fontWeight: 600,
-              fontSize: 14,
-              cursor: "pointer",
-              fontFamily: "inherit",
+              borderRadius: 16,
+              padding: 20,
             }}
           >
-            Sair
-          </button>
-        </form>
+            <div style={{ fontSize: 13, color: "#6B6B6B" }}>{c.rotulo}</div>
+            <div style={{ fontSize: 32, fontWeight: 800, marginTop: 6 }}>{c.valor}</div>
+            {c.valor === 0 && (
+              <div style={{ fontSize: 11, color: "#9A9A98", marginTop: 2 }}>
+                sem dados ainda
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-    </main>
+
+      {/* Lista dos programas */}
+      <h2 style={{ fontSize: 16, fontWeight: 700, margin: "0 0 12px" }}>Programas</h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {programas.length === 0 && (
+          <p style={{ color: "#9A9A98", fontSize: 14 }}>Nenhum programa cadastrado.</p>
+        )}
+        {programas.map((p) => (
+          <div
+            key={p.id}
+            style={{
+              background: "#fff",
+              border: "1px solid #E6E6E4",
+              borderRadius: 16,
+              padding: 20,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 16,
+            }}
+          >
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontWeight: 700, fontSize: 15 }}>{p.nome}</div>
+              {p.publicoAlvo && (
+                <div style={{ fontSize: 13, color: "#6B6B6B", marginTop: 2 }}>
+                  {p.publicoAlvo}
+                </div>
+              )}
+              {p.descricao && (
+                <div style={{ fontSize: 12, color: "#9A9A98", marginTop: 4 }}>{p.descricao}</div>
+              )}
+            </div>
+            <span
+              style={{
+                flexShrink: 0,
+                fontSize: 12,
+                fontWeight: 700,
+                borderRadius: 999,
+                padding: "4px 12px",
+                background: p.ativo ? "#16A34A1A" : "#9A9A981A",
+                color: p.ativo ? "#16A34A" : "#6B6B6B",
+              }}
+            >
+              {p.ativo ? "Ativo" : "Inativo"}
+            </span>
+          </div>
+        ))}
+      </div>
+    </AdminShell>
   );
 }
