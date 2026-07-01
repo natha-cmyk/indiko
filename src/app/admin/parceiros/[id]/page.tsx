@@ -1,8 +1,10 @@
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { getSessaoAtual } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "@/components/admin-shell";
 import { BadgeStatus } from "@/components/badge-status";
+import { CopyLink } from "@/components/copy-link";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +54,12 @@ export default async function DetalheParceiro({ params }: { params: { id: string
   const podePausar = parceiro.status !== "BANIDO";
   const acaoRotulo = parceiro.status === "ATIVO" ? "Pausar parceiro" : "Reativar parceiro";
 
+  // Monta o link de indicacao (landing co-branded) a partir do endereco atual.
+  const h = headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "";
+  const proto = h.get("x-forwarded-proto") ?? "https";
+  const linkIndicacao = `${proto}://${host}/r/${parceiro.id}`;
+
   return (
     <AdminShell titulo="Parceiro" atual="Parceiros" nome={sessao.nome} papel={sessao.papel}>
       <a href="/admin/parceiros" style={{ fontSize: 13, color: "#00BBC5", textDecoration: "none" }}>
@@ -94,6 +102,15 @@ export default async function DetalheParceiro({ params }: { params: { id: string
             <div style={{ fontSize: 12, color: "#6B6B6B" }}>Comissões</div>
             <div style={{ fontSize: 24, fontWeight: 800 }}>{parceiro._count.comissoes}</div>
           </div>
+        </div>
+
+        {/* Link de indicacao para compartilhar com o parceiro */}
+        <div style={{ marginTop: 24 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 6 }}>Link de indicação</div>
+          <p style={{ fontSize: 12, color: "#9A9A98", margin: "0 0 8px" }}>
+            Envie este link ao parceiro. Quem abrir e preencher vira uma indicação atribuída a ele.
+          </p>
+          <CopyLink url={linkIndicacao} />
         </div>
 
         {/* Acao: pausar / reativar */}

@@ -10,7 +10,7 @@ const BORDA = "#E6E6E4";
 // Itens do menu. Os que ainda nao existem ficam marcados como "em breve".
 const MENU: { rotulo: string; href?: string }[] = [
   { rotulo: "Visão geral", href: "/admin" },
-  { rotulo: "Indicações" },
+  { rotulo: "Indicações", href: "/admin/indicacoes" },
   { rotulo: "Resgates" },
   { rotulo: "Programas" },
   { rotulo: "Parceiros", href: "/admin/parceiros" },
