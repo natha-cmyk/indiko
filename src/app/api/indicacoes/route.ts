@@ -12,10 +12,13 @@ export async function POST(req: Request) {
     const produtoId = String(corpo.produtoId ?? "").trim();
     const leadNome = String(corpo.leadNome ?? "").trim();
     const leadTelefone = String(corpo.leadTelefone ?? "").trim() || null;
-    const leadEmail = String(corpo.leadEmail ?? "").toLowerCase().trim() || null;
+    const leadEmail = String(corpo.leadEmail ?? "").toLowerCase().trim();
 
-    if (!parceiroId || !produtoId || !leadNome) {
-      return NextResponse.json({ erro: "Preencha seu nome e o que procura." }, { status: 400 });
+    if (!parceiroId || !produtoId || !leadNome || !leadEmail) {
+      return NextResponse.json(
+        { erro: "Preencha seu nome, e-mail e o que procura." },
+        { status: 400 },
+      );
     }
 
     // Parceiro precisa existir e estar ATIVO.

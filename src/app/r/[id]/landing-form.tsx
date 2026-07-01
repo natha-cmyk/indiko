@@ -89,9 +89,9 @@ export function LandingForm({
             </div>
           ) : (
             <form onSubmit={enviar} style={{ background: "#fff", border: "1px solid #E6E6E4", borderRadius: 16, padding: 28, boxShadow: "0 12px 40px rgba(18,17,17,.10)" }}>
-              <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 4px" }}>Quero conhecer o {orgNome}</h2>
+              <h2 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 4px" }}>É um prazer te receber no {orgNome}</h2>
               <p style={{ fontSize: 14, color: "#6B6B6B", margin: "0 0 20px" }}>
-                Preencha e a gente te chama com a condição da indicação.
+                Preencha as informações abaixo e aperte no botão pra agilizarmos seu atendimento.
               </p>
 
               <label style={rotulo}>Seu nome</label>
@@ -100,8 +100,8 @@ export function LandingForm({
               <label style={{ ...rotulo, marginTop: 16 }}>WhatsApp</label>
               <input value={leadTelefone} onChange={(e) => setLeadTelefone(e.target.value)} style={campo} placeholder="(84) 9 9999-9999" />
 
-              <label style={{ ...rotulo, marginTop: 16 }}>E-mail (opcional)</label>
-              <input type="email" value={leadEmail} onChange={(e) => setLeadEmail(e.target.value)} style={campo} placeholder="voce@email.com" />
+              <label style={{ ...rotulo, marginTop: 16 }}>E-mail</label>
+              <input type="email" value={leadEmail} onChange={(e) => setLeadEmail(e.target.value)} required style={campo} placeholder="voce@email.com" />
 
               <label style={{ ...rotulo, marginTop: 16 }}>O que você procura?</label>
               <select value={produtoId} onChange={(e) => setProdutoId(e.target.value)} required style={campo}>
@@ -114,10 +114,10 @@ export function LandingForm({
               {erro && <p style={{ color: "#FF001E", fontSize: 13, margin: "16px 0 0", fontWeight: 600 }}>{erro}</p>}
 
               <button type="submit" disabled={enviando} style={{ width: "100%", marginTop: 24, background: enviando ? "#9A9A98" : cor, color: "#fff", fontWeight: 700, fontSize: 15, border: "none", borderRadius: 12, padding: "14px 20px", cursor: enviando ? "default" : "pointer", fontFamily: "inherit" }}>
-                {enviando ? "Enviando..." : `Falar com o ${orgNome}`}
+                {enviando ? "Enviando..." : "Enviar pro Seahub"}
               </button>
               <p style={{ fontSize: 12, textAlign: "center", color: "#9A9A98", margin: "12px 0 0" }}>
-                Sem compromisso. Resposta em até 1 dia útil.
+                Você será redirecionado(a) para o nosso WhatsApp. Te vejo lá!
               </p>
             </form>
           )}
